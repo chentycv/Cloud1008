@@ -3,83 +3,233 @@
 <html class="no-js" lang="en" >
 
 <head>
-	<meta charset="utf-8">
-	<!-- If you delete this meta tag World War Z will become a reality -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Cloud1008</title>
-	<link rel="icon" type="image/svg+xml" href="images/1oo8.svg">
-	
-	<!-- If you are using the CSS version, only link these 2 files, you may add app.css to use for your overrides if you like -->
-	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/foundation.css">
-	
-	<!-- If you are using the gem version, you need this only -->
-	<!-- <link rel="stylesheet" href="css/app.css">
-	-->
-	<script src="js/vendor/modernizr.js"></script>
-	
-	<!-- form and the dropzone.js styles -->
-	<link rel="stylesheet" type="text/css" href="css/dropzone.css" />
+    <meta charset="utf-8">
+    <!-- If you delete this meta tag World War Z will become a reality -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud1008</title>
+    <link rel="icon" type="image/svg+xml" href="images/1oo8.svg">
+
+    <!-- If you are using the CSS version, only link these 2 files, you may add app.css to use for your overrides if you like -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/foundation.css">
+
+    <!-- If you are using the gem version, you need this only -->
+    <!-- <link rel="stylesheet" href="css/app.css">
+    -->
+    <script src="vendor/modernizr.js"></script>
+
+    <!-- form and the dropzone.js styles -->
+    <link rel="stylesheet" type="text/css" href="css/dropzone.css" />
     <link rel="stylesheet" type="text/css" href="css/uploader.css" />
     <link rel="stylesheet" type="text/css" href="css/font.css" />
     <link rel="stylesheet" type="text/css" href="css/login.css" />
 </head>
+    
 <body>
-	<div class="sticky">
-	  <!-- body content here -->
-	<nav class="top-bar" data-topbar role="navigation" >
-	  <ul class="title-area">
-	    <li class="name">
-	      <h1><a href="#">Cloud1008</a></h1>
-	    </li>
-	     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-	    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-	  </ul>
-	
-	  <section class="top-bar-section">
-	    <!-- Right Nav Section -->
-	    
-	    <ul class="right">
-	      <li class="has-dropdown">
-	        <a href="#">Edit</a>
-	        <ul class="dropdown">
-	          <li><a href="http://www.google.com">Delete all</a></li>
-	        </ul>
-	      </li>
-	      <li class="has-dropdown">
-	        <a href="#" id="account-dropdown">Account</a>
-	        <ul class="dropdown">
-	          <li><a href="#" id="login-dropdown" data-reveal-id="login-modeal">Login in</a></li>
-	          <li><a href="#" id="register-dropdown" data-reveal-id="register-modeal">Register</a></li>
-	          <li><a href="#" id="logout-dropdown" >Login out</a></li>
-	        </ul>
-	      </li>
-	    </ul>
-	
-	    <!-- Left Nav Section -->
-	    <ul class="left">
-	   	<li class="has-form">
-		<div class="row collapse">
-		  <div class="large-8 small-9 columns">
-		      <input type="text" placeholder="Find Stuff">
-		    </div>
-		    <div class="large-4 small-3 columns">
-		      <a href="#" class="alert button expand">Search</a>
-		    </div>
-		  </div>
-		</li>
-		<li class="has-form">
-		  <a href="http://foundation.zurb.com/docs" class="button">Delete</a>
-		</li>
-	    </ul>
-	  </section>
-	</nav>
-	</div>
-	<!-- Here is the dropzone.js form -->
-	<form action="./add" id="uploader" class="dropzone" method="post" enctype="multipart/form-data">
-	<div class="bigplus"></div>
+    
+    <!-- Nav bar content here -->
+    <div class="sticky">
 
-	</form>
+        <nav class="top-bar" data-topbar role="navigation">
+
+            <!-- The name of the webapp -->
+            <ul class="title-area">
+                <li class="name">
+                    <h1><a href="#">Cloud1008</a></h1>
+                </li>
+                
+                <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+	            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+            </ul>
+
+            <section class="top-bar-section">
+
+                <!-- Left Nav Section -->
+                <ul class="left">
+                    <li class="has-form">
+                        <div class="row collapse">
+                            <div class="large-8 small-9 columns">
+                                <input type="text" placeholder="Find Stuff">
+                            </div>
+                            <div class="large-4 small-3 columns">
+                                <a href="#" class="alert button expand">Search</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="has-form">
+                        <a href="http://foundation.zurb.com/docs" class="button">Delete</a>
+                    </li>
+                    <li class="active"><a href="#">我的网盘</a></li>
+                    <li class="active"><a href="#">我的分享</a></li>
+                </ul>
+
+
+                <!-- Right Nav Section -->
+                <ul class="right">
+                    <li class="active"><a href="#">帮助</a></li>
+                    <li class="has-dropdown">
+                        <a href="#">Edit</a>
+                        <ul class="dropdown">
+                        <li><a href="http://www.google.com">Delete all</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#" id="account-dropdown">Account</a>
+                        <ul class="dropdown">
+                            <li><a href="#" id="login-dropdown" data-reveal-id="login-modeal">Login in</a></li>
+                            <li><a href="#" id="register-dropdown" data-reveal-id="register-modeal">Register</a></li>
+                            <li><a href="#" id="logout-dropdown" >Login out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </section>
+        </nav>
+    </div>
+    
+	<!-- Here is the dropzone.js form -->
+    <div class="row">
+        <div class="large-3 columns">
+            <table data-options="is_hover: true">
+                <tr>
+                    <ul class="tabs" data-tab>
+                      <li class="tab-title active"><a href="#panel1">Tab 1</a></li>
+                      <li class="tab-title"><a href="#panel2">Tab 2</a></li>
+                    </ul>
+                    <div class="tabs-content">
+                      <div class="content active" id="panel1">
+                          
+                          <div class="row">
+                              <div class="large-12 columns">
+                                <nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
+                                  <section class="top-bar-section">
+                                    <ul>
+                                      <li class="divider hide-for-small"></li>
+                                      <li class="has-dropdown"><a>好友分类1</a>
+                                        <ul class="dropdown">
+                                          <li><label>好友分类1列表</label></li>
+                                          <li><a href="#">大哥</a></li>
+                                          <li><a href="#">二哥</a></li>
+                                          <li><a href="#">三哥</a></li>
+                                          <li class="divider"></li>
+                                        </ul>
+                                      </li>
+                                    </ul>
+                                  </section>
+                                </nav>
+                              </div>
+                            </div> 
+                          
+                          <div class="row">
+                              <div class="large-12 columns">
+                                <nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
+                                  <section class="top-bar-section">
+                                    <ul>
+                                      <li class="divider hide-for-small"></li>
+                                      <li class="has-dropdown"><a>好友分类2</a>
+                                        <ul class="dropdown">
+                                          <li><label>好友分类2列表</label></li>
+                                          <li><a href="#">大姐</a></li>
+                                          <li><a href="#">二姐</a></li>
+                                          <li><a href="#">三姐</a></li>
+                                          <li class="divider"></li>
+                                        </ul>
+                                      </li>
+                                    </ul>
+                                  </section>
+                                </nav>
+                              </div>
+                            </div>  
+                          
+                      </div>
+                      <div class="content" id="panel2">
+                        
+                          <div class="row">
+                              <div class="large-12 columns">
+                                <nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
+                                  <section class="top-bar-section">
+                                    <ul>
+                                      <li class="divider hide-for-small"></li>
+                                      <li class="has-dropdown"><a>群组分类1</a>
+                                        <ul class="dropdown">
+                                          <li><label>群组分类1列表</label></li>
+                                          <li><a href="#">大姨</a></li>
+                                          <li><a href="#">二姨</a></li>
+                                          <li><a href="#">三姨</a></li>
+                                          <li class="divider"></li>
+                                        </ul>
+                                      </li>
+                                    </ul>
+                                  </section>
+                                </nav>
+                              </div>
+                            </div>  
+                          
+                          <div class="row">
+                              <div class="large-12 columns">
+                                <nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
+                                  <section class="top-bar-section">
+                                    <ul>
+                                      <li class="divider hide-for-small"></li>
+                                      <li class="has-dropdown"><a>群组分类2</a>
+                                        <ul class="dropdown">
+                                          <li><label>群组分类2列表</label></li>
+                                          <li><a href="#">大妈</a></li>
+                                          <li><a href="#">大叔</a></li>
+                                          <li><a href="#">大爷</a></li>
+                                          <li class="divider"></li>
+                                        </ul>
+                                      </li>
+                                    </ul>
+                                  </section>
+                                </nav>
+                              </div>
+                            </div>  
+                          
+                      </div>
+                    </div>
+                </tr>
+                <tr>
+                    <td><a href="#" class="button tiny">添加好友</a></td>
+                    <td><a href="#" class="button tiny">添加群组</a></td>
+                </tr>
+            </table>
+            
+            <!--点击“我的网盘”后显示-->
+            <ul>
+                <li>我的文件</li>
+                <a href="#">文档</a><br>
+                <a href="#">图片</a><br>
+                <a href="#">音乐</a><br>
+                <a href="#">视频</a><br>
+                <a href="#">其他</a>
+                <hr/>
+                <li>我的分享</li>
+                <a href="#">公开</a><br>
+                <a href="#">私密</a>
+                <hr/>
+                <li>回收站</li>
+                <a href="#">已删除</a>
+                <hr/>
+                <li>云盘容量</li>
+                
+                <!--每次进行文件操作后，更新进度条-->
+                <div class="progress"  id="prog" value="0" max="100">
+                  <span class="meter"></span>
+                </div>
+                <div id="numvalue">0%</div>
+            </ul>	
+            
+        </div>
+        <div class="large-9 columns">
+            <form action="./add" id="uploader" class="dropzone" method="post" enctype="multipart/form-data">
+            <div class="bigplus"></div>
+
+            </form>
+        </div>
+    </div>
+    
+    <!-- Footer contents -->
 	<div class="footer">
 		<a href="about.html" data-search="">About</a>
 		<a href="blog.html" data-search="">Blog</a>
@@ -89,11 +239,13 @@
 		<img src="images/1oo8.svg" />
 	</div>
 
+    <!-- The preview of the content -->
 	<ul class="clearing-thumbs" data-clearing="" style="display:none">
 	  <li><a class="th" href="http://foundation.zurb.com/docs/assets/img/examples/comet.jpg"><img data-caption="Nulla vitae elit libero, a pharetra augue. Cras mattis consectetur purus sit amet fermentum." ></a></li>
 	  <li><a class="th" href="http://foundation.zurb.com/docs/assets/img/examples/earth.jpg"><img data-caption="Nulla vitae elit libero, a pharetra augue. Cras mattis consectetur purus sit amet fermentum." ></a></li>
 	</ul>
 
+    <!-- The login modeal -->
 	<div id="login-modeal"  class="reveal-modal" data-reveal>
 	  <h2>Login in</h2>
 		<form id="login-form" action="./login.action" method="post" data-abide>
@@ -121,7 +273,8 @@
 		<small id="result" class="error" style="display:none">Time out</small>
 	  	<a class="close-reveal-modal">&#215;</a>
 	</div>
-
+    
+    <!-- The login modeal -->
 	<div id="register-modeal"  class="reveal-modal" data-reveal>
 	  <h2>Register</h2>
 		<form id="register-form" action="./register.action" method="post" data-abide>
@@ -151,9 +304,12 @@
 	  	<a class="close-reveal-modal">&#215;</a>
 	</div>
 
-	<script src="js/vendor/jquery.js"></script>
-	<script src="js/vendor/fastclick.js"></script>
-	<script src="js/foundation.min.js"></script>
+    <!-- The script of vendor -->
+	<script src="vendor/jquery.js"></script>
+	<script src="vendor/fastclick.js"></script>
+	<script src="vendor/foundation.min.js"></script>
+    
+    <!-- The script of custom -->
 	<script src="script/dropzone.js"></script>
 	<script src="script/uploader.js"></script>
 	<script src="script/usermanager.js"></script>
