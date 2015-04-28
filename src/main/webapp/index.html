@@ -15,6 +15,7 @@
 <meta name="description" content="The clood1008 network stroage" />
 <meta name="keywords" content="cloud1008, stroage" />
   
+<!-- Add support to Jquery -->
 <script>
 (function () {
   var
@@ -28,44 +29,48 @@
 }());
 </script>
 
-
+<!-- Effects -->
 <script src="javascript/library/easing.min.js"></script>
 <script src="javascript/library/highlight.min.js"></script>
 <script src="javascript/library/highlight.languages.min.js"></script>
 <script src="javascript/library/history.min.js"></script>
 <script src="javascript/library/tablesort.min.js"></script>
 
-
-
+<!-- The semantic library  -->
 <script src="javascript/library/semantic.min.js"></script>
-
-
-
+    
+<!-- The semantic library  -->
+<script src="javascript/dropzone.js"></script>
+    
+<!-- The main page script -->    
 <script src="javascript/index.js"></script>
-
-  
+    
+<!-- The style sheets -->
 <link rel="stylesheet" type="text/css" class="ui" href="stylesheets/semantic.min.css">
-
-
-
 <link rel="stylesheet" type="text/css" href="stylesheets/index.css">
-<link rel="stylesheet" type="text/css" href="stylesheets/rtl.css">
+<link rel="stylesheet" type="text/css" href="stylesheets/rtl.css">    
+<link rel="stylesheet" type="text/css" href="stylesheets/dropzone.css">
+<link rel="stylesheet" type="text/css" href="stylesheets/uploader.css">
+<link rel="stylesheet" type="text/css" href="stylesheets/font.css">
 
     
 </head>
+
 <body id="example" class="custom" ontouchstart="">
 
 <div class="ui vertical inverted sidebar menu" id="toc">
   <div class="item">
-    <a class="ui logo icon image" href="">
-      <img src="images/logo.png">
-    </a>
-    <a href=""><b>Yo! Cloud1008</b></a>
+
+    <h3>
+        <a class="ui logo icon">
+            <img src="images/header.png"  style="height:17px">
+        </a>
+    </h3>
   </div>
   <a class="item">
-    <i class="disk outline icon"></i> <b>主目录</b>
+    <i class="user icon"></i> <b>主目录</b>
   </a>
-  <a class="item">
+  <a class="item launch-toc-friend">
     <i class="user icon"></i> <b>好友</b>
   </a>
   <a class="item" href="kitchen-sink.html">
@@ -74,14 +79,33 @@
   <div class="item">
     <i class="share alternate icon"></i> <b>我的分享</b>
     <div class="menu">
-        <a class="item" href="globals/reset.html">公开分享</a>
-        <a class="item" href="globals/reset.html">私密分享</a>
+        <a class="item" href="globals/reset.html"><b>公开分享</b></a>
+        <a class="item" href="globals/reset.html"><b>私密分享</b></a>
     </div>
   </div>
   <a class="item" href="kitchen-sink.html">
     <i class="trash icon"></i> <b>回收站</b>
   </a>
 </div>
+
+<div class="ui vertical inverted teal sidebar menu" id="toc-friend">
+  <div class="item">
+      <h3><i class="user icon"></i><b>我的好友</b></h3>
+  </div>
+  <a class="item">
+    <i class="disk outline icon"></i> <b>李强</b>
+  </a>
+  <a class="item">
+    <i class="disk outline icon"></i> <b>李强强</b>
+  </a>
+  <a class="item">
+    <i class="disk outline icon"></i> <b>李大强</b>
+  </a>
+  <a class="item">
+    <i class="disk outline icon"></i> <b>超级李强</b>
+  </a>
+
+</div>    
 
 <div class="ui black big launch right attached fixed button">
   <i class="content icon"></i>
@@ -94,7 +118,6 @@
   <div class="container">
     <a class="launch item">
       <i class="content icon"></i>
-      菜单
     </a>
     
       <div class="item">
@@ -119,54 +142,74 @@
     <div class="header segment">
       <div class="container">
         <div class="introduction">
-
-          <h1 class="ui header">
-            李强的分享
-
-          </h1>
-
           <div class="ui breadcrumb">
-            <a class="section">主目录</a>
-            <div class="divider"> / </div>
-            <a class="section">学习资料</a>
-            <div class="divider"> / </div>
-            <div class="active section">T-Shirt</div>
+            <div class="divider"><h1><i class="disk outline icon"></i></h1></div>
+            <a class="section"><h2>李强</h2></a>
+              <div class="divider"><h2> / </h2></div>
+            <a class="section"><h2>主目录</h2></a>
+              <div class="divider"><h2> / </h2></div>
+            <div class="active section"><h2>T-Shirt</h2></div>
           </div>
         </div>
+
       </div>
         
-    
       <div class="container toolbar">
-        <div class="ui buttons">
-          <div class="teal ui button">
-            <i class="copy icon"></i>
+        <div class="tiny ui buttons">
+          <div class="ui button">
+            <i class="folder outline icon"></i>
             全选
           </div>
-          <div class="blue ui button">
+          <div class="ui button">
             <i class="copy icon"></i>
             复制到
           </div>
-          <div class="green ui button">
+          <div class="ui button">
             <i class="cut icon"></i>
             移动到
           </div>
-          <div class="purple ui button">
+          <div class="ui button">
             <i class="share icon"></i>
             分享
           </div>
-          <div class="red ui button">
+          <div class="ui button">
             <i class="trash outline icon"></i>
             删除
           </div>
         </div>
       </div>
+        
+      <div class="container toolbar no-text">
+        <div class="tiny ui icon buttons">
+          <div class="ui button">
+            <i class="folder outline icon"></i>
+          </div>
+          <div class="ui button">
+            <i class="copy icon"></i>
+          </div>
+          <div class="ui button">
+            <i class="cut icon"></i>
+          </div>
+          <div class="ui button">
+            <i class="share icon"></i>
+          </div>
+          <div class="ui button">
+            <i class="trash outline icon"></i>
+          </div>
+        </div>
+      </div>
     </div>
     </div>
 
+<!--
     <div class="main demo container">
 
-
     </div>
+-->
+      
+    <form action="./add" id="uploader" class="main demo container dropzone" method="post" enctype="multipart/form-data">
+        <div class="bigplus"></div>
+    </form>
   </div>
 
   <div class="ui basic language modal">
@@ -235,6 +278,9 @@ window.less = {
   useFileCache : true
 };
 </script>
+
+<!-- The uploader script -->    
+<script src="javascript/uploader.js"></script>
 
 <script src="javascript/library/less.min.js"></script>
 

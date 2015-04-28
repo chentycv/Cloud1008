@@ -35,6 +35,7 @@ semantic.ready = function() {
     $ui                  = $('.ui').not('.hover, .down'),
     $swap                = $('.theme.menu .item'),
     $menu                = $('#toc'),
+    $menuFriend          = $('#toc-friend'),
     $hideMenu            = $('#toc .hide.item'),
     $sortTable           = $('.sortable.table'),
     $demo                = $('.demo'),
@@ -1049,8 +1050,9 @@ semantic.ready = function() {
   });
   $menu
     .sidebar({
-      transition       : 'uncover',
-      mobileTransition : 'uncover'
+      closable         : false,
+      transition       : 'overlay',
+      mobileTransition : 'overlay'
     })
   ;
   $('.launch.button, .view-ui, .launch.item')
@@ -1059,6 +1061,21 @@ semantic.ready = function() {
       event.preventDefault();
     })
   ;
+  $menuFriend
+    .sidebar({
+      closable         : false,
+      transition       : 'overlay',
+      mobileTransition : 'overlay'
+    })
+  ;
+  $('#toc .launch-toc-friend')
+    .on('click', function(event) {
+      $menu.sidebar('hide');
+      $menuFriend.sidebar('show');
+      event.preventDefault();
+    })
+  ;
+
 
   handler.createIcon();
   $example
