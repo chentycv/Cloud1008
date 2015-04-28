@@ -161,7 +161,6 @@ a:hover {
   position: relative;
   z-index: 2;
   margin: 0em;
-  min-height: 185px;
   padding-top: 70px;
   padding-bottom: 30px;
   background-color: #FFFFFF;
@@ -1070,6 +1069,10 @@ body#example {
   margin-bottom: 0em;
 }
 
+#example .no-radius {
+  border-radius: 0;
+}
+
 
 /*--------------
    Visibility
@@ -1568,6 +1571,11 @@ body.progress.animated .ui.progress .bar {
 /*******************************
       Definition Container
 *******************************/
+#example .header .toolbar {
+  bottom: -30px;
+  z-index: 2;
+  text-align: right;
+}
 
 #example > .pusher > .footer {
   clear: both;
@@ -1583,6 +1591,8 @@ body.progress.animated .ui.progress .bar {
   padding: 2em 2em 7em;
   z-index: 1;
 }
+
+
 #example .wide.main.container {
   width: 80%;
   margin: 0 auto;
@@ -1640,7 +1650,7 @@ body.progress.animated .ui.progress .bar {
   }
   #example .header.segment {
     padding-top: 60px;
-    padding-bottom: 20px;
+/*    padding-bottom: 20px;*/
   }
   #example .example i.code {
     opacity: 0.3;
@@ -1656,7 +1666,7 @@ body.progress.animated .ui.progress .bar {
     margin: 0em 2rem;
   }
   #example .header .button {
-    margin-bottom: 0.5em;
+/*    margin-bottom: 0.5em;*/
   }
   #example .main.container {
     padding: 1em 2em;
