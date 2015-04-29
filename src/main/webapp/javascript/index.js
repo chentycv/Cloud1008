@@ -1055,7 +1055,7 @@ semantic.ready = function() {
       mobileTransition : 'overlay'
     })
   ;
-  $('.launch.button, .view-ui, .launch.item')
+  $('.launch.button, .view-ui, .launch.item, #toc .item.title.back')
     .on('click', function(event) {
       $menu.sidebar('toggle');
       event.preventDefault();
@@ -1068,10 +1068,9 @@ semantic.ready = function() {
       mobileTransition : 'overlay'
     })
   ;
-  $('#toc .launch-toc-friend')
+  $('#toc .launch-toc-friend,  #toc-friend .item.title.back')
     .on('click', function(event) {
-      $menu.sidebar('hide');
-      $menuFriend.sidebar('show');
+      $menuFriend.sidebar('toggle');
       event.preventDefault();
     })
   ;

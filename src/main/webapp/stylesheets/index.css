@@ -155,6 +155,13 @@ a:hover {
   color: #6DFFFF !important;
 }
 
+#example .sidebar .item.title{
+  display: inline-block;
+}
+
+#example .sidebar .item.title.back{
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
 
 /* segment headers */
 #example .header.segment {
