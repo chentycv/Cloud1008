@@ -35,7 +35,10 @@ semantic.ready = function() {
     $ui                  = $('.ui').not('.hover, .down'),
     $swap                = $('.theme.menu .item'),
     $menu                = $('#toc'),
-    $menuFriend          = $('#toc-friend'),
+    $menuFriends         = $('#toc-friends'),
+    $menuFriendDetails   = $('#toc-friend-details'),
+    $menuGroups          = $('#toc-groups'),
+    $menuGroupMembers    = $('#toc-group-members'),
     $hideMenu            = $('#toc .hide.item'),
     $sortTable           = $('.sortable.table'),
     $demo                = $('.demo'),
@@ -1048,33 +1051,82 @@ semantic.ready = function() {
       'javascript'
     ]
   });
+
+  // Main menu sidebar
   $menu
     .sidebar({
-      closable         : false,
+      closable         : true,
       transition       : 'overlay',
       mobileTransition : 'overlay'
     })
   ;
-  $('.launch.button, .view-ui, .launch.item, #toc .item.title.back')
+  $('.launch.button, .view-ui, .launch.item, #toc .item.title.back, .show-file')
     .on('click', function(event) {
       $menu.sidebar('toggle');
       event.preventDefault();
     })
   ;
-  $menuFriend
+
+  // Friends sidebar
+  $menuFriends
     .sidebar({
-      closable         : false,
+      closable         : true,
       transition       : 'overlay',
       mobileTransition : 'overlay'
     })
   ;
-  $('#toc .launch-toc-friend,  #toc-friend .item.title.back')
+  $('#toc .launch-toc-friends,  #toc-friends .item.title.back')
     .on('click', function(event) {
-      $menuFriend.sidebar('toggle');
+      $menuFriends.sidebar('toggle');
+      event.preventDefault();
+    })
+  ;
+    
+  // Friend details sidebar
+  $menuFriendDetails
+    .sidebar({
+      closable         : true,
+      transition       : 'overlay',
+      mobileTransition : 'overlay'
+    })
+  ;
+  $('#toc-friends .launch-toc-friend-details,  #toc-friend-details .item.title.back')
+    .on('click', function(event) {
+      $menuFriendDetails.sidebar('toggle');
+      event.preventDefault();
+    })
+  ;
+    
+    
+  // Groups sidebar
+  $menuGroups
+    .sidebar({
+      closable         : true,
+      transition       : 'overlay',
+      mobileTransition : 'overlay'
+    })
+  ;
+  $('#toc .launch-toc-groups,  #toc-groups .item.title.back')
+    .on('click', function(event) {
+      $menuGroups.sidebar('toggle');
       event.preventDefault();
     })
   ;
 
+  // Group members sidebar
+  $menuGroupMembers
+    .sidebar({
+      closable         : true,
+      transition       : 'overlay',
+      mobileTransition : 'overlay'
+    })
+  ;
+  $('#toc-groups .launch-toc-group-members,  #toc-group-members .item.title.back')
+    .on('click', function(event) {
+      $menuGroupMembers.sidebar('toggle');
+      event.preventDefault();
+    })
+  ;
 
   handler.createIcon();
   $example

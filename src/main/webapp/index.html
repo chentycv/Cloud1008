@@ -58,6 +58,8 @@
 
 <body id="example" class="custom" ontouchstart="">
 
+    
+<!-- Main menu sidebar -->
 <div class="ui vertical inverted sidebar menu" id="toc">
   <a class="item title back">
       <h3><b><i class="angle left outline icon"></i></b></h3>
@@ -72,10 +74,10 @@
   <a class="item">
     <i class="disk outline icon"></i> <b>主目录</b>
   </a>
-  <a class="item launch-toc-friend">
+  <a class="item launch-toc-friends">
     <i class="user icon"></i> <b>好友</b>
   </a>
-  <a class="item" href="kitchen-sink.html">
+  <a class="item launch-toc-groups">
     <i class="users icon"></i> <b>群组</b>
   </a>
   <div class="item">
@@ -90,7 +92,8 @@
   </a>
 </div>
 
-<div class="ui vertical inverted teal sidebar menu" id="toc-friend">
+<!-- Friends sidebar -->
+<div class="ui vertical inverted teal sidebar menu" id="toc-friends">
   <a class="item title back">
       <h3><b><i class="angle left outline icon"></i></b></h3>
   </a>  
@@ -99,21 +102,120 @@
         <i class="user icon"></i><b>我的好友</b>
     </h3>
   </div>
-  <a class="item">
-    <i class="disk outline icon"></i> <b>李强</b>
+  <div class="item ui inverted transparent fluid category search">
+    <div class="ui icon input">
+      <input class="prompt" type="text" placeholder="添加好友...">
+      <i class="search icon"></i>
+    </div>
+    <div class="results"></div>
+  </div>
+  <a class="item launch-toc-friend-details">
+    <b>李强</b>
   </a>
-  <a class="item">
-    <i class="disk outline icon"></i> <b>李强强</b>
+  <a class="item launch-toc-friend-details">
+    <b>李强强</b>
   </a>
-  <a class="item">
-    <i class="disk outline icon"></i> <b>李大强</b>
+  <a class="item launch-toc-friend-details">
+    <b>李大强</b>
   </a>
-  <a class="item">
-    <i class="disk outline icon"></i> <b>超级李强</b>
+  <a class="item launch-toc-friend-details">
+    <b>超级李强</b>
   </a>
+</div>     
+    
+<!-- Friend details sidebar -->
+<div class="ui vertical inverted teal sidebar menu" id="toc-friend-details">
+  <a class="item title back">
+      <h3><b><i class="angle left outline icon"></i></b></h3>
+  </a>  
+  <div class="item title">
+    <h3>
+        <i class="user icon"></i><b>李强</b>
+    </h3>
+  </div>
+
+  <div class="teal 2 fluid ui buttons">
+    <div class="ui button">查看文件</div>
+    <div class="ui button">删除好友</div>
+  </div>
+  <div class="item">
+    <i class="text telephone icon"></i> <b>1388888888</b>
+  </div>
+  <div class="item">
+    <i class="mail outline icon"></i> <b>Liqiang@qq.com</b>
+  </div>
 
 </div>    
+    
+<!-- Groups sidebar -->
+<div class="ui vertical inverted blue sidebar menu" id="toc-groups">
+  <a class="item title back">
+      <h3><b><i class="angle left outline icon"></i></b></h3>
+  </a>  
+  <div class="item title">
+    <h3>
+        <i class="users icon"></i><b>我的群组</b>
+    </h3>
+  </div>
+  <div class="item ui inverted transparent fluid category search">
+    <div class="ui icon input">
+      <input class="prompt" type="text" placeholder="加入群组...">
+      <i class="search icon"></i>
+    </div>
+    <div class="results"></div>
+  </div>
+  <a class="item launch-toc-group-members">
+    <i class="remove outline icon"></i> <b>李强粉丝群</b>
+  </a>
+  <a class="item launch-toc-group-members">
+    <i class="remove outline icon"></i> <b>李强黑群</b>
+  </a>
+  <a class="item launch-toc-group-members">
+    <i class="remove outline icon"></i> <b>李强DOTA群</b>
+  </a>
+  <a class="item launch-toc-group-members">
+    <i class="remove outline icon"></i> <b>代写小学生作业</b>
+  </a>
+</div>    
 
+    
+<!-- Group member sidebar -->
+<div class="ui vertical inverted blue sidebar menu" id="toc-group-members">
+  <a class="item title back">
+      <h3><b><i class="angle left outline icon"></i></b></h3>
+  </a>  
+  <div class="item title">
+    <h3>
+        <i class="users icon"></i><b>X的成员</b>
+    </h3>
+  </div>
+  <div class="item ui inverted transparent fluid category search">
+    <div class="ui icon input">
+      <input class="prompt" type="text" placeholder="添加成员...">
+      <i class="search icon"></i>
+    </div>
+    <div class="results"></div>
+  </div>
+  <div class="blue 2 fluid ui buttons">
+    <div class="ui button">查看文件</div>
+    <div class="ui button">离开群组</div>
+  </div>
+
+  <a class="item">
+    <i class="remove outline icon"></i> <b>李强</b>
+  </a>
+  <a class="item">
+    <i class="remove outline icon"></i> <b>李强强</b>
+  </a>
+  <a class="item">
+    <i class="remove outline icon"></i> <b>李大强</b>
+  </a>
+  <a class="item">
+    <i class="remove outline icon"></i> <b>超级李强</b>
+  </a>
+</div>    
+
+<!-- Big menu icon -->
 <div class="ui black big launch right attached fixed button">
   <i class="content icon"></i>
   <span class="text">菜单</span>
