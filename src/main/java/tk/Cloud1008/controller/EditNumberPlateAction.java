@@ -10,8 +10,8 @@ import org.apache.struts2.interceptor.SessionAware;
 import tk.Cloud1008.entity.NumberPlateEntity;
 import tk.Cloud1008.entity.NumberPlateFile;
 import tk.Cloud1008.exceptions.InvalidFrontEndAccessException;
+import tk.Cloud1008.interceptor.LoginInterceptor;
 import tk.Cloud1008.service.NumberPlateManager;
-import tk.Cloud1008.controller.LoginInterceptor;
 import tk.Cloud1008.service.UserDetails;
 import tk.Cloud1008.util.Base64;
 

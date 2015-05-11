@@ -15,6 +15,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import tk.Cloud1008.exceptions.InvalidUsernameOrPasswordException;
+import tk.Cloud1008.interceptor.LoginInterceptor;
 import tk.Cloud1008.service.UserDetails;
 import tk.Cloud1008.service.UserManager;
 

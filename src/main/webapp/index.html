@@ -44,6 +44,9 @@
     
 <!-- The main page script -->    
 <script src="javascript/index.js"></script>
+<script src="javascript/menu.js"></script>
+<script src="javascript/dropdown.js"></script>    
+<script src="javascript/modal.js"></script>
     
 <!-- The style sheets -->
 <link rel="stylesheet" type="text/css" class="ui" href="stylesheets/semantic.min.css">
@@ -222,7 +225,7 @@
     </div>
 
     
-    
+    <!-- Nav bar -->
     <div class="ui fixed inverted main menu">
       <div class="container">
         <a class="launch item">
@@ -236,16 +239,23 @@
           </div>  
 
         <div class="right menu">
-          <div class="ui language dropdown item" id="languages" data-content="登入Cloud1008">
-              <a><i class="setting icon"></i> 账户设置</a>
-          </div>
-          <div class="ui language dropdown item" id="languages" data-content="登入Cloud1008">
-              <a><i class="sign in icon"></i> 登入</a>
+          <div class="ui dropdown item" id="account">
+              <a><i class="setting icon"></i> 李强</a>
+              <div class="ui menu">
+              <a class="item" id="update-information">
+                修改信息
+              </a>
+              <a class="item" id="update-password">
+                修改密码
+              </a>
+              <a class="item" id="logout">
+                登出
+              </a>
+              </div>
           </div>
         </div>
       </div>
     </div>
-    
     
     <div class="pusher">
     <div class="">
@@ -415,7 +425,7 @@ window.less = {
 <!-- The uploader script -->    
 <script src="javascript/uploader.js"></script>
 
-<script src="javascript/library/less.min.js"></script>
+<!--<script src="javascript/library/less.min.js"></script>-->
 
 
 </body>

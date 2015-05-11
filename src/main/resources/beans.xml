@@ -18,8 +18,8 @@
     
     <!-- This bean has been referred fron struts.xml file; So type it correctly; -->
     <!-- Make scope prototype; This is really important. -->
-
-    <bean name="listAction" class="tk.Cloud1008.controller.listAction" scope="prototype">
+	<context:component-scan base-package="tk.Cloud1008" />
+<!--     <bean name="listAction" class="tk.Cloud1008.controller.listAction" scope="prototype">
 	     <property name="numberPlateManager">
 	        <ref bean="numberPlateManager"/>
 	     </property>
@@ -49,13 +49,13 @@
 	     </property>
     </bean> 
     
-<!--     <bean name="editNumberPlateAction" class="tk.Cloud1008.controller.EditNumberPlateAction" scope="prototype">
+    <bean name="editNumberPlateAction" class="tk.Cloud1008.controller.EditNumberPlateAction" scope="prototype">
 	     <property name="numberPlateManager">
 	        <ref bean="numberPlateManager"/>
 	     </property>
     </bean>
-     -->
-    <!-- These beans are injected automatically by spring context -->
+    
+    These beans are injected automatically by spring context
     <bean id="numberPlateDAO" class="tk.Cloud1008.dao.NumberPlateDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -70,7 +70,7 @@
 	    </property>
     </bean>
     
-    <bean id="loginInterceptor" class="tk.Cloud1008.controller.LoginInterceptor">  
+    <bean id="loginInterceptor" class="tk.Cloud1008.interceptor.LoginInterceptor">  
         <property name="userManager">
 	    	<ref bean="userManager"/>
 	    </property>
@@ -82,7 +82,7 @@
     
     <bean id="userDAO" class="tk.Cloud1008.dao.UserDAOImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
-	</bean>    
+	</bean>     -->
 	
     <!-- Configure jdbc.properties -->
     <bean id="propertyConfigurer"
@@ -98,7 +98,7 @@
  
 	<!-- Configure hibernate session factory -->    
     <bean id="sessionFactory"
-        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation">
             <value>classpath:hibernate.cfg.xml</value>
@@ -110,11 +110,14 @@
             <props>
                 <prop key="hibernate.dialect">${jdbc.dialect}</prop>
                 <prop key="hibernate.show_sql">true</prop>
-<!--                 <prop key="hibernate.connection.CharSet">utf8</prop>
+                <prop key="hibernate.connection.CharSet">utf8</prop>
 		        <prop key="hibernate.connection.characterEncoding">utf8</prop>
-		        <prop key="hibernate.connection.useUnicode">true</prop> -->
+		        <prop key="hibernate.connection.useUnicode">true</prop>
+		        <prop key="hibernate.format_sql">true</prop>
+		        <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
+        <property name="packagesToScan" value="tk.Cloud1008.entity" />
     </bean>
     <!-- Run SQL queries in transactions -->
     <tx:annotation-driven />

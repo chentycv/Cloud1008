@@ -20,7 +20,6 @@ public class UserEntity {
 	
 	@Column(name="PASSWORD")
     private String password;
-	
 
 	@Column(name="ENABLED")
     private String enabled;
