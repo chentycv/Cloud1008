@@ -1,19 +1,18 @@
 package tk.Cloud1008.dao;
 
-import tk.Cloud1008.entity.UserEntity;
-import tk.Cloud1008.exceptions.InvalidCookiesException;
-import tk.Cloud1008.exceptions.InvalidDataAccessException;
+import java.util.List;
+
+import tk.Cloud1008.entity.User;
 
 public interface UserDAO {
 
-	String getPasswordsByUsername(String username);
+	void save(User user);
 
-	void createPersistentLoginsEntity(String username, String series, String token, String LastUsed);
+	List<User> getAll();
 
-	String getUsernameBySeriesAndToken(String series, String token) throws InvalidCookiesException;
+	User get(long id);
 
-	void setTokenBySeries(String series, String token) throws InvalidDataAccessException;
+	void delete(User user);
 
-	void addUserEntity(UserEntity userEntity) throws InvalidDataAccessException;
-
+	void update(User user);
 }

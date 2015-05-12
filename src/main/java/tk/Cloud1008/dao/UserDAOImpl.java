@@ -4,77 +4,54 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import tk.Cloud1008.entity.PersistentLoginsEntity;
-import tk.Cloud1008.entity.UserEntity;
-import tk.Cloud1008.exceptions.InvalidCookiesException;
-import tk.Cloud1008.exceptions.InvalidDataAccessException;
+import tk.Cloud1008.entity.User;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
-    private SessionFactory sessionFactory;
-    
-	//This setter will be used by Spring context to inject the sessionFactory instance
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-
-	@SuppressWarnings("unchecked") 
+	
+	@Autowired
+    SessionFactory sessionFactory;
+	
 	@Override
-	public String getPasswordsByUsername(String username) {
-		
-		Query query = sessionFactory.getCurrentSession().createQuery(
-				"FROM UserEntity WHERE USERNAME = :username");
-		query.setParameter("username", username);
-		List <UserEntity> UserEntities = query.list();
-		return UserEntities.get(0).getPassword();
+	@Transactional
+	public void save(User user) {
+		this.sessionFactory.getCurrentSession().save(user);
 	}
-
+	
 	@Override
-	public void createPersistentLoginsEntity(String username, String series, String token, String LastUsed) {
-		PersistentLoginsEntity persistentLoginsEntity = new PersistentLoginsEntity();
-		persistentLoginsEntity.setUsername(username);
-		persistentLoginsEntity.setSeries(series);
-		persistentLoginsEntity.setToken(token);
-		persistentLoginsEntity.setLastUsed(LastUsed);
-		this.sessionFactory.getCurrentSession().save(persistentLoginsEntity);
+	@Transactional
+	public void update(User user) {
+		this.sessionFactory.getCurrentSession().update(user);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public String getUsernameBySeriesAndToken(String series, String token) throws InvalidCookiesException {
-		try {
-			Query query = sessionFactory.getCurrentSession().createQuery(
-					"FROM PersistentLoginsEntity WHERE SERIES = :series AND TOKEN = :token " );
-			query.setParameter("series", series);
-			query.setParameter("token", token);		
-			List <PersistentLoginsEntity> PersistentLoginsEntities = query.list();
-			return PersistentLoginsEntities.get(0).getUsername();
-		} catch (Exception e) {
-			throw new InvalidCookiesException();
-		}
+	@Transactional
+	public List<User> getAll() {
+		Query query = sessionFactory.getCurrentSession().createQuery(
+				"FROM User");
+		List <User> users = query.list();
+		return users;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public User get(long id) {
+		Query query = sessionFactory.getCurrentSession().createQuery(
+				"FROM User WHERE ID = :id");
+		query.setParameter("id", id);
+		List <User> users = query.list();
+		return users.get(0);
 	}
 
 	@Override
-	public void setTokenBySeries(String series, String token) throws InvalidDataAccessException {
-		try {
-			Query query  = sessionFactory.getCurrentSession().createQuery(
-				"UPDATE PersistentLoginsEntity SET TOKEN = :token WHERE SERIES = :series");
-			query.setParameter("series", series);
-			query.setParameter("token", token);
-			query.executeUpdate();
-		} catch (Exception e){
-			throw new InvalidDataAccessException();
-		}
-	}
-
-	@Override
-	public void addUserEntity(UserEntity userEntity) throws InvalidDataAccessException {
-		try {
-			this.sessionFactory.getCurrentSession().save(userEntity);
-		} catch (Exception e){
-			throw new InvalidDataAccessException();
-		}
+	@Transactional
+	public void delete(User user) {
+    	this.sessionFactory.getCurrentSession().delete(user);
 	}
 }
