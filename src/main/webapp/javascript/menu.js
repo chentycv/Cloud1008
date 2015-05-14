@@ -24,7 +24,7 @@ semantic.menu.ready = function() {
   ;
     
   // event handlers
-  handler = {
+  semantic.menu.handler = {
   
   showModal: function(modal) {
       modal.modal('show');

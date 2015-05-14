@@ -7,16 +7,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PERSISTENTLOGINS")
-public class PersistentLoginsEntity {
+@Table(name="PERSISTENTLOGIN")
+public class PersistentLogin {
 
     @Id
     @Column(name="ID")
     @GeneratedValue
-    private Integer id;
+    private long id;
 
-	@Column(name="USERNAME")
-    private String username;
+	@Column(name="USERID")
+    private long userId;
     
     @Column(name="SERIES")
     private String series;
@@ -28,7 +28,7 @@ public class PersistentLoginsEntity {
     private String LastUsed;    
     
     
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -36,12 +36,12 @@ public class PersistentLoginsEntity {
 		this.id = id;
 	}
 	
-    public String getUsername() {
-		return username;
+    public long getUserID() {
+		return userId;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public String getSeries() {

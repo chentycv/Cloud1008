@@ -12,7 +12,6 @@
 	<constant name="struts.convention.default.parent.package"
 		value="rest-default" />
 	<constant name="struts.convention.package.locators" value="controller" />
-	<!-- <constant name="struts.rest.namespace" value="/rest" /> -->
 	<constant name="struts.convention.action.includeJars" value=".*?/_wl_cls_gen.*?jar(!/)?" />
 	<constant name="struts.convention.exclude.parentClassLoader"
 		value="true" />
@@ -22,11 +21,22 @@
 		value="org.apache.struts2.dispatcher.mapper.PrefixBasedActionMapper" />
 	<constant name="struts.mapper.prefixMapping" value="/rest:rest,:struts" />
 	<constant name="struts.mapper.alwaysSelectFullNamespace"
-		value="false" />
+		value="false" /> 
 
 	<package name="base-default" extends="struts-default">
 		<global-results>
-			<result name="error">/WEB-INF/common/error.jsp</result>
+			 <result name="notfound" type="httpheader">
+			   <param name="status">404</param>
+			 </result>
+			 <result name="badrequest" type="httpheader">
+			   <param name="status">400</param>
+			 </result>
+			 <result name="conflict" type="httpheader">
+			   <param name="status">409</param>
+			 </result>
+			 <result name="success" type="httpheader">
+			   <param name="status">200</param>
+			 </result>
 		</global-results>
 
 		<global-exception-mappings>
@@ -95,18 +105,16 @@
 	</package>
 
 	<package name="page-package" namespace="/" extends="base-default">
-		<interceptors>
+ 		<interceptors>
 			<interceptor name="exceptionInterceptor"
 				class="tk.Cloud1008.interceptor.ExceptionInterceptor">
 			</interceptor>
 			<interceptor-stack name="appStack">
 				<interceptor-ref name="defaultStack">
-					<param name="modelDriven.refreshModelBeforeResult">true</param>
 				</interceptor-ref>
-				<interceptor-ref name="exceptionInterceptor" />
 			</interceptor-stack>
 		</interceptors>
-		<default-interceptor-ref name="appStack" />
+		<default-interceptor-ref name="appStack" /> 
 	</package>
 
 </struts>

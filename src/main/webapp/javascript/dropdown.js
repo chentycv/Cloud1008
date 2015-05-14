@@ -6,9 +6,9 @@ semantic.dropdown.ready = function() {
   // selector cache
   var
     $accountDropdown     = $('.right.menu #account'),
-    $updateInformation   = $accountDropdown.filter('#update-information'),
-    $updatePassowrd      = $accountDropdown.filter('#update-password'),
-    $logout              = $accountDropdown.filter('#logout'),
+    $updateInformation   = $accountDropdown.find('#update-information'),
+    $updatePassowrd      = $accountDropdown.find('#update-password'),
+    $logout              = $accountDropdown.find('#logout'),
       
       
     // alias
@@ -16,8 +16,10 @@ semantic.dropdown.ready = function() {
   ;
     
   // event handlers
-  handler = {
-  
+  semantic.dropdown.handler = {
+    updateUsername : function(loginName) {
+      $accountDropdown.find("#username").html(loginName);
+    }
   
   };
     
@@ -35,13 +37,32 @@ semantic.dropdown.ready = function() {
       on         : 'click',
       onShow     : function() {
         $(this).popup('hide');
-      },
-      onChange : handler.translatePage
+      }
     })
   ;
     
   $updateInformation.on('click', function(event) {
       $menuGroupMembers.sidebar('toggle');
+      event.preventDefault();
+    })
+  ;
+
+  $logout.on('click', function(event) {
+      $.ajax({
+        url  : './logout',
+        type : 'get',
+        data : {},
+        success: function (msg) {
+
+          // Clear the loginName
+          semantic.dropdown.handler.updateUsername("");
+
+          // Show the login modal
+          semantic.modal.handler.showLoginModal();
+        },
+        error: function (errormessage) {
+        }
+      });
       event.preventDefault();
     })
   ;

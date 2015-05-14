@@ -6,31 +6,27 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import tk.Cloud1008.entity.User;
 
 @Repository
-public class UserDAOImpl implements UserDAO {
+public class UsersDAOImpl implements UsersDAO {
 	
 	@Autowired
     SessionFactory sessionFactory;
 	
 	@Override
-	@Transactional
 	public void save(User user) {
 		this.sessionFactory.getCurrentSession().save(user);
 	}
 	
 	@Override
-	@Transactional
 	public void update(User user) {
 		this.sessionFactory.getCurrentSession().update(user);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional
 	public List<User> getAll() {
 		Query query = sessionFactory.getCurrentSession().createQuery(
 				"FROM User");
@@ -40,7 +36,6 @@ public class UserDAOImpl implements UserDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional
 	public User get(long id) {
 		Query query = sessionFactory.getCurrentSession().createQuery(
 				"FROM User WHERE ID = :id");
@@ -50,8 +45,35 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	@Transactional
 	public void delete(User user) {
     	this.sessionFactory.getCurrentSession().delete(user);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public User getByLoginNameAndPassword(String loginName, String password) {
+		Query query = sessionFactory.getCurrentSession().createQuery(
+				"FROM User WHERE loginName = :loginName AND password = :password");
+		query.setParameter("loginName", loginName);
+		query.setParameter("password", password);
+		List <User> users = query.list();
+		if (users.size() == 0) {
+			return null;
+		} else {
+			return users.get(0);
+		}
+	}
+
+	@Override
+	public User getByLoginName(String loginName) {
+		Query query = sessionFactory.getCurrentSession().createQuery(
+				"FROM User WHERE loginName = :loginName");
+		query.setParameter("loginName", loginName);
+		List <User> users = query.list();
+		if (users.size() == 0) {
+			return null;
+		} else {
+			return users.get(0);
+		}
 	}
 }

@@ -2,17 +2,21 @@ package tk.Cloud1008.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.struts2.rest.DefaultHttpHeaders;
 import org.apache.struts2.rest.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import tk.Cloud1008.controller.base.RestBaseAction;
 import tk.Cloud1008.entity.User;
 import tk.Cloud1008.service.UsersService;
+
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 @Controller
-public class UsersController extends ActionSupport implements ModelDriven<Object> { 
+public class UsersController extends RestBaseAction { 
 	
 	@Autowired
 	UsersService usersService;
@@ -24,30 +28,36 @@ public class UsersController extends ActionSupport implements ModelDriven<Object
 	
 	private Object model = user;
 	
+	private DefaultHttpHeaders httpHeaders = new DefaultHttpHeaders("index").disableCaching();
+	
+	
 	// Get /rest/users
 	public HttpHeaders index() {
 		users = usersService.getAll();
 		model = users;
-		return new DefaultHttpHeaders("index").disableCaching();
+		return httpHeaders.withStatus(200);
 	}
 	
 	// POST /rest/users
 	public HttpHeaders create() throws IOException {
 		usersService.save((User)model);
-		return null;
+		model = user;
+		return httpHeaders.withStatus(200);
 	}
 	
 	// GET /rest/users/{id}
 	public HttpHeaders show() {
 		user = usersService.get(Long.parseLong(id));
-		return new DefaultHttpHeaders("show");
+		model = user;
+		return httpHeaders.withStatus(200);
 	}
 	
 	// PUT /rest/users/{id}
 	public HttpHeaders update() {
 		user.setId(Long.parseLong(id));
 		usersService.update(user);
-		return null;
+		model = user;
+		return httpHeaders.withStatus(200);
 	}
 
 	// DELETE /rest/users/{id}
@@ -55,12 +65,8 @@ public class UsersController extends ActionSupport implements ModelDriven<Object
 		user = new User();
 		user.setId(Long.parseLong(id));
 		usersService.delete(user);
-		return null;
-	}
-	
-	// Get /rest/users/{id}/files
-	public String files(){
-		return "SUCCESS";
+		model = user;
+		return httpHeaders.withStatus(200);
 	}
 	
 	public String getId() {
