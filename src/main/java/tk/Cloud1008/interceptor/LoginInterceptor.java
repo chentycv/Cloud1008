@@ -61,7 +61,6 @@ public class LoginInterceptor extends AbstractInterceptor {
 		}
 		
 		// Login with cookies fail so login with password
-//		return "error";
-		return invocation.invoke();
+		return "error";
 	}
 }

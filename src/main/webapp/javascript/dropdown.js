@@ -59,6 +59,9 @@ semantic.dropdown.ready = function() {
 
           // Show the login modal
           semantic.modal.handler.showLoginModal();
+
+          // Clear the cookies
+          document.cookie = "";
         },
         error: function (errormessage) {
         }

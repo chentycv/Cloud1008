@@ -66,6 +66,9 @@
 			<interceptor name="exceptionInterceptor"
 				class="tk.Cloud1008.interceptor.ExceptionInterceptor">
 			</interceptor>
+			<interceptor name="loginInterceptor"
+				class="tk.Cloud1008.interceptor.LoginInterceptor">
+			</interceptor>
 			<interceptor-stack name="restDefaultStack">
 				<interceptor-ref name="exception" />
 				<interceptor-ref name="alias" />
@@ -98,6 +101,7 @@
 					<param name="excludeMethods">input,back,cancel,browse,index,show,edit,editNew,deleteConfirm,destroy,create</param>
 				</interceptor-ref>
 				<interceptor-ref name="exceptionInterceptor" />
+				<interceptor-ref name="loginInterceptor" />
 			</interceptor-stack>
 		</interceptors>
 		<default-interceptor-ref name="restDefaultStack" />
