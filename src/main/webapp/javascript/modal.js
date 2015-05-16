@@ -214,6 +214,7 @@ semantic.modal.ready = function() {
 	        password = $form.find( "input[name='password']" ).val(),
 	        confirmPassword = $form.find( "input[name='confirmPassword']" ).val();
 
+        if (loginName.length >= 3 && password === confirmPassword && password.length >=6 )
 		$.ajax({
 		  url  : './register',
 		  type : 'get',
