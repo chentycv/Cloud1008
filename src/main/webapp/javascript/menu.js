@@ -26,9 +26,6 @@ semantic.menu.ready = function() {
   // event handlers
   semantic.menu.handler = {
   
-  showModal: function(modal) {
-      modal.modal('show');
-    },
   
   };
     
@@ -58,9 +55,32 @@ semantic.menu.ready = function() {
   $('#toc .launch-toc-friends,  #toc-friends .item.title.back')
     .on('click', function(event) {
       $menuFriends.sidebar('toggle');
+      
+      // Sent http request when modal is actived
+      if( $menuFriends.sidebar('is hidden') ){
+          $.ajax({
+		  url  : './rest/friend',
+		  type : 'get',
+		  data : {loginName: loginName, password: password},
+		  success: function (msg) {
+			
+		  	// Hide all the modal
+			$registerModal.find(".error.message").hide();
+          	
+			// Show login form 
+          	semantic.modal.handler.showModal($loginModal);
+
+          	// Clear the input form 
+          	$form.form('clear');
+          },
+          error: function (errormessage) {
+			$registerModal.find(".error.message").show();
+          }
+		});
+      }
       event.preventDefault();
     })
-  ;
+  ;    
     
   // Friend details sidebar
   $menuFriendDetails
