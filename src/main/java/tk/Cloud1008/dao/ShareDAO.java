@@ -2,18 +2,18 @@ package tk.Cloud1008.dao;
 
 import java.util.List;
 
-import tk.Cloud1008.entity.ShareEntity;
+import tk.Cloud1008.entity.Share;
 
 public interface ShareDAO {
 	
-	public void addShareEntity(ShareEntity share);
+	public void addShareEntity(Share share);
 	
 	public void deleteShare(long id);
 	
-	public void deleteShare(ShareEntity share);
+	public void deleteShare(Share share);
 	
-	public List<ShareEntity> selectShare();
+	public List<Share> selectShare();
 	
-	public void updateShare(ShareEntity share);
+	public void updateShare(Share share);
 
 }

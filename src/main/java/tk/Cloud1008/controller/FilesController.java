@@ -8,7 +8,8 @@ import org.apache.struts2.rest.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import tk.Cloud1008.entity.FileEntity;
+import tk.Cloud1008.controller.base.RestBaseAction;
+import tk.Cloud1008.entity.File;
 import tk.Cloud1008.entity.User;
 import tk.Cloud1008.service.FileService;
 import tk.Cloud1008.service.UsersService;
@@ -17,30 +18,36 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 @Controller
-public class FilesController extends ActionSupport implements ModelDriven<Object> { 
+public class FilesController extends RestBaseAction { 
 	
 	@Autowired
 	FileService fileService;
 	
 	private static final long serialVersionUID = 1L;
 	private String id;
-	private FileEntity file = new FileEntity();
-	private List<FileEntity> files;
+	private long parentid;
+	private long ownerid;
+
+
+	private File file = new File();
+	private List<File> files;
 	
 	private Object model = file;
 	
+	private DefaultHttpHeaders httpHeaders = new DefaultHttpHeaders("index").disableCaching();
 	
 	// Get /rest/files
 	public HttpHeaders index() {
-		files = fileService.select(0, 0);
+		files = fileService.select(parentid,ownerid);
 		model = files;
-		return new DefaultHttpHeaders("index").disableCaching();
+		return httpHeaders.withStatus(200);
 	}
 	
 	// POST /rest/files
 	public HttpHeaders create() throws IOException {
-		fileService.add((FileEntity)model);
-		return null;
+		fileService.add((File)model);
+		model = file;
+		return httpHeaders.withStatus(200);
 	}
 	
 	
@@ -48,15 +55,17 @@ public class FilesController extends ActionSupport implements ModelDriven<Object
 	public HttpHeaders update() {
 		file.setId(Long.parseLong(id));
 		fileService.update(file);
-		return null;
+		model = file;
+		return httpHeaders.withStatus(200);
 	}
 	
 	// DELETE /rest/files/{id}
 	public HttpHeaders destroy() {
-		file = new FileEntity();
+		file = new File();
 		file.setId(Long.parseLong(id));
 		fileService.delete(file);
-		return null;
+		model = file;
+		return httpHeaders.withStatus(200);
 	}
 	
 	
@@ -82,4 +91,21 @@ public class FilesController extends ActionSupport implements ModelDriven<Object
 	public Object getModel() {
 		return model;
 	}
+
+	public long getParentid() {
+		return parentid;
+	}
+
+	public void setParentid(long parentid) {
+		this.parentid = parentid;
+	}
+
+	public long getOwnerid() {
+		return ownerid;
+	}
+
+	public void setOwnerid(long ownerid) {
+		this.ownerid = ownerid;
+	}
+
 } 

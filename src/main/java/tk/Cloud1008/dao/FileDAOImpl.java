@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import tk.Cloud1008.entity.FileEntity;
+import tk.Cloud1008.entity.File;
 
 @Repository
 @Transactional
@@ -22,7 +22,7 @@ public class FileDAOImpl implements FileDAO {
 	}
 
 	@Override
-	public void addFileEntity(FileEntity file){
+	public void addFileEntity(File file){
 
 		this.sessionFactory.getCurrentSession().save(file);
 
@@ -39,7 +39,7 @@ public class FileDAOImpl implements FileDAO {
 	}
 	
 	@Override
-	public void deleteFileEntity(FileEntity file) {
+	public void deleteFileEntity(File file) {
 		// TODO Auto-generated method stub
 		deleteFileEntityByID(file.getId());
 	}
@@ -47,29 +47,29 @@ public class FileDAOImpl implements FileDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<FileEntity> selectFileEntityByParentID(long parentid, long owner) {
+	public List<File> selectFileEntityByParentID(long parentid, long owner) {
 		// TODO Auto-generated method stub
 		Query query = this.sessionFactory.getCurrentSession()
-				.createQuery("from FileEntity f where f.parent = :id and f.owner = :owner");
+				.createQuery("from File f where f.parent = :id and f.owner = :owner");
 		query.setParameter("id", parentid);
 		query.setParameter("owner", owner);
 		
-		return (List<FileEntity>) query.list();
+		return (List<File>) query.list();
 	}
 
 	@Override
-	public void updateFile(FileEntity file) {
+	public void updateFile(File file) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().update(file);
 	}
 
 	@Override
-	public FileEntity selectFile(long id) {
+	public File selectFile(long id) {
 		// TODO Auto-generated method stub
 		Query query = this.sessionFactory.getCurrentSession()
 				.createQuery("from FileEntity f where f.id = :id");
 		query.setParameter("id", id);
-		return (FileEntity) query.list().get(0);
+		return (File) query.list().get(0);
 	}
 
 

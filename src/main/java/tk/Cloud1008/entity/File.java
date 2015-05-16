@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "FILE")
-public class FileEntity {
+public class File {
 
 	private long id;
 	private String name;

@@ -2,19 +2,19 @@ package tk.Cloud1008.dao;
 
 import java.util.List;
 
-import tk.Cloud1008.entity.FileEntity;
+import tk.Cloud1008.entity.File;
 
 public interface FileDAO {
 	
-	public void addFileEntity(FileEntity file);
+	public void addFileEntity(File file);
 	
 	public void deleteFileEntityByID(long id);
 	
-	public void deleteFileEntity(FileEntity file);
+	public void deleteFileEntity(File file);
 	
-	public List<FileEntity> selectFileEntityByParentID(long id,long owner);
-	public FileEntity selectFile(long id);
+	public List<File> selectFileEntityByParentID(long id,long owner);
+	public File selectFile(long id);
 	
-	public void updateFile(FileEntity file);
+	public void updateFile(File file);
 
 }

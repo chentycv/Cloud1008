@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import tk.Cloud1008.entity.FileEntity;
-import tk.Cloud1008.entity.ShareEntity;
+import tk.Cloud1008.entity.File;
+import tk.Cloud1008.entity.Share;
 
 @Repository
 public class ShareDAOImpl implements ShareDAO {
@@ -32,13 +32,13 @@ public class ShareDAOImpl implements ShareDAO {
 	}
 
 	@Override
-	public void deleteShare(ShareEntity share) {
+	public void deleteShare(Share share) {
 		// TODO Auto-generated method stub
 		this.deleteShare(share.getId());
 	}
 
 	@Override
-	public List<ShareEntity> selectShare() {
+	public List<Share> selectShare() {
 		// TODO Auto-generated method stub
 		
 /*		Query query = this.sessionFactory.getCurrentSession()
@@ -51,13 +51,13 @@ public class ShareDAOImpl implements ShareDAO {
 	}
 
 	@Override
-	public void updateShare(ShareEntity share) {
+	public void updateShare(Share share) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().update(share);
 	}
 
 	@Override
-	public void addShareEntity(ShareEntity share) {
+	public void addShareEntity(Share share) {
 		// TODO Auto-generated method stub
 		this.sessionFactory.getCurrentSession().save(share);
 	}

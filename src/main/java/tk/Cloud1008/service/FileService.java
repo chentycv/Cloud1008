@@ -2,16 +2,16 @@ package tk.Cloud1008.service;
 
 import java.util.List;
 
-import tk.Cloud1008.entity.FileEntity;
+import tk.Cloud1008.entity.File;
 
 public interface FileService {
 	
-	public void add(FileEntity file);
+	public void add(File file);
 	
 	public void delete(long id);
-	public void delete(FileEntity file);
+	public void delete(File file);
 	
-	public List<FileEntity> select(long id, long owner);
+	public List<File> select(long id, long owner);
 	
-	public void update(FileEntity file);
+	public void update(File file);
 }

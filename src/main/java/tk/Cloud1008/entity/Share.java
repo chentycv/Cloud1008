@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name ="SHARE")
-public class ShareEntity {
+public class Share {
 
 	private long id;	
 	public enum Type{PUBLIC,PRIVATE};

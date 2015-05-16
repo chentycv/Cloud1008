@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tk.Cloud1008.dao.ShareDAO;
-import tk.Cloud1008.entity.ShareEntity;
+import tk.Cloud1008.entity.Share;
 
 @Service
 public class ShareServiceImpl implements ShareService{
@@ -17,7 +17,7 @@ public class ShareServiceImpl implements ShareService{
 
 	@Transactional
 	@Override
-	public void add(ShareEntity share) {
+	public void add(Share share) {
 		// TODO Auto-generated method stub
 		shareDAO.addShareEntity(share);
 	}
@@ -31,19 +31,19 @@ public class ShareServiceImpl implements ShareService{
 
 	@Transactional
 	@Override
-	public void delete(ShareEntity share) {
+	public void delete(Share share) {
 		// TODO Auto-generated method stub
 		shareDAO.deleteShare(share);
 	}
 
 	@Override
-	public List<ShareEntity> select() {
+	public List<Share> select() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void update(ShareEntity share) {
+	public void update(Share share) {
 		// TODO Auto-generated method stub
 		shareDAO.updateShare(share);
 	}
