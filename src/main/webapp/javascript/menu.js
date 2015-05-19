@@ -7,11 +7,11 @@ semantic.menu.ready = function() {
   var
   
     $menu                = $('#toc'),
-    $menuFriends         = $('#toc-friends'),
+      
+    $menuFriends         = $('#toc-friends'),     
     $menuFriendDetails   = $('#toc-friend-details'),
     $menuGroups          = $('#toc-groups'),
     $menuGroupMembers    = $('#toc-group-members'),
-//    $sidebarButton       = $('.fixed.launch.button'),
 
     requestAnimationFrame = window.requestAnimationFrame
       || window.mozRequestAnimationFrame
@@ -25,8 +25,33 @@ semantic.menu.ready = function() {
     
   // event handlers
   semantic.menu.handler = {
-  
-  
+    renderMenuFriends: function(users){
+        
+      // Update the users model
+      if (users) { this.renderMenuFriends.users = users; };
+     
+      // Clear the model
+      $launchTocFriendDetails.html("");
+        
+      for (var i in users){
+         var friendElement = $friendTemplete.clone();
+         friendElement.find("b").html(users[i].loginName);
+          
+         // Show the details of a friend
+         friendElement.on('click', users[i], function(event) {
+            
+            // Set the content of the elements
+            $menuFriendDetails.find("[data='loginName']").html(event.data.loginName);
+            $menuFriendDetails.find("[data='telephone']").html(event.data.mobile);
+            $menuFriendDetails.find("[data='email']").html(event.data.email);
+             
+            // Show the siderbar
+            $menuFriendDetails.sidebar('toggle');
+            event.preventDefault();
+         });
+         friendElement.appendTo($launchTocFriendDetails);
+      } 
+    }
   };
     
   // Main menu sidebar
@@ -52,29 +77,42 @@ semantic.menu.ready = function() {
       mobileTransition : 'overlay'
     })
   ;
+    
+  $friendTemplete = $menuFriends.find(".launch-toc-friend-details .item").first(),
+  $launchTocFriendDetails = $menuFriends.find(".launch-toc-friend-details"),
+ 
   $('#toc .launch-toc-friends,  #toc-friends .item.title.back')
     .on('click', function(event) {
       $menuFriends.sidebar('toggle');
       
-      // Sent http request when modal is actived
+      // Sent http request when friend sidebar is actived
       if( $menuFriends.sidebar('is hidden') ){
           $.ajax({
-		  url  : './rest/friend',
+		  url  : './rest/users/' + semantic.init.handler.user.id + '/friends.json',
 		  type : 'get',
-		  data : {loginName: loginName, password: password},
-		  success: function (msg) {
-			
-		  	// Hide all the modal
-			$registerModal.find(".error.message").hide();
-          	
-			// Show login form 
-          	semantic.modal.handler.showModal($loginModal);
+		  data : {},
+		  success: function (friends) {
+              var users = [];
+              var renderTrigger = 0;
+              for(var i = 0; i < friends.length; i++){
+                  $.ajax({
+                    url : './rest/users/' + friends[i].userBId + '.json',
+                    type : 'get',
+                    data : {},
+                    success: function (user) {
+                        users.push(user);
+                        
+                        // Render the friend details menu when all user got
+                        if ( ++renderTrigger == friends.length){
+                            semantic.menu.handler.renderMenuFriends(users);
+                        }
+                    }
+                  }); 
+              }
+              
 
-          	// Clear the input form 
-          	$form.form('clear');
           },
           error: function (errormessage) {
-			$registerModal.find(".error.message").show();
           }
 		});
       }
@@ -90,7 +128,7 @@ semantic.menu.ready = function() {
       mobileTransition : 'overlay'
     })
   ;
-  $('#toc-friends .launch-toc-friend-details,  #toc-friend-details .item.title.back')
+  $('#toc-friend-details .item.title.back')
     .on('click', function(event) {
       $menuFriendDetails.sidebar('toggle');
       event.preventDefault();

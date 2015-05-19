@@ -127,11 +127,6 @@ semantic.modal.ready = function() {
 	})
 	;
 	  
-	// Show login modal when no cookies
-	if (document.cookie === ""){
-		semantic.modal.handler.showModal($loginModal);
-	}
-	  
 	// Register modal
 	$registerModal
 	  .modal({

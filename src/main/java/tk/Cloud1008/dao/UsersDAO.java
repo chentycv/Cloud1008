@@ -19,4 +19,6 @@ public interface UsersDAO {
 	public User getByLoginNameAndPassword(String loginName, String password);
 
 	public User getByLoginName(String loginName);
+
+	public List<User> getAllBySearchTerm(String searchTerm);
 }

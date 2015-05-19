@@ -9,4 +9,6 @@ public interface PersistentLoginDAO {
 	void delete(PersistentLogin persistentLogin);
 
 	PersistentLogin getBySeriesAndToken(String series, String token);
+
+	void update(PersistentLogin persistentLogin);
 }

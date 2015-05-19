@@ -25,6 +25,7 @@ public class LoginInterceptor extends AbstractInterceptor {
 	
 	public static final String USER_SESSION_KEY="wallet.session.user";
 	public static final String COOKIE_REMEMBERME_KEY="wallet.cookie.rememberme";
+	public static final String COOKIE_USER_ID="wallet.cookie.userid";
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -44,16 +45,36 @@ public class LoginInterceptor extends AbstractInterceptor {
 		Cookie[] cookies = request.getCookies();
 		try{
 			if (cookies != null) {	
+				
+				User user = null;
+				Long userId = null;
+				Cookie tokenCookie = null;
+				Cookie userIdCookie;
+				
+				// Get the value of cookies
 				for (Cookie cookie : cookies) {
 					if (COOKIE_REMEMBERME_KEY.equals(cookie.getName())){
-						User user = usersService.getByCooikes(cookie.getValue());
-						if (user != null){ 
-							session.put(LoginInterceptor.USER_SESSION_KEY,user);
-							cookie.setValue(usersService.getCurrentCookiesValue());
-							response.addCookie(cookie);
-							return invocation.invoke();
-						}
+						user = usersService.getByCooikes(cookie.getValue());
+						tokenCookie = cookie;
+					} else if (COOKIE_USER_ID.equals(cookie.getName())){
+						userId = Long.parseLong(cookie.getValue());
 					}
+				}
+				if (user != null && userId == user.getId()){ 
+					
+					// Add the token cookie
+					session.put(LoginInterceptor.USER_SESSION_KEY,user);
+					tokenCookie.setValue(usersService.getCurrentCookiesValue());
+					response.addCookie(tokenCookie);
+					
+					// Add the userid cookie
+					userIdCookie = new Cookie(COOKIE_USER_ID, userId.toString()); 
+					userIdCookie.setMaxAge(60 * 60 * 24 * 14);
+					response.addCookie(tokenCookie);
+					
+					
+					// Bypass the action
+					return invocation.invoke();
 				}
 			}
 		} catch (InvalidCookiesException e){
@@ -61,6 +82,6 @@ public class LoginInterceptor extends AbstractInterceptor {
 		}
 		
 		// Login with cookies fail so login with password
-		return "error";
+		return "badrequest";
 	}
 }

@@ -36,7 +36,12 @@ public class PersistentLoginDAOImpl implements PersistentLoginDAO {
 			return persistentLogins.get(0);
 		}
 	}
-
+	
+	@Override
+	public void update(PersistentLogin persistentLogin) {
+		this.sessionFactory.getCurrentSession().update(persistentLogin);
+	}
+	
 	@Override
 	public void delete(PersistentLogin persistentLogin) {
     	this.sessionFactory.getCurrentSession().delete(persistentLogin);

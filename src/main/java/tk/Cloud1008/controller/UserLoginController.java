@@ -37,16 +37,20 @@ public class UserLoginController extends PageBaseAction implements ServletRespon
 	private HttpServletResponse response;
 	private HttpServletRequest request;
 	private Map session;
+	private User user;
 
 	@Action("register")
 	public String register() {
-		User user = usersService.getByLoginName(loginName);
-		if ( user == null ){ 
+		User user = new User();
+		user.setLoginName(loginName);
+		user.setPassword(password);
+		this.user = usersService.getByLoginName(user);
+		if ( this.user == null ){ 
 			if (loginName.length() >= 3 && password.length() >= 6) {
-				user = new User();
-				user.setLoginName(loginName);
-				user.setPassword(password);
-				usersService.save(user);
+				this.user = new User();
+				this.user.setLoginName(loginName);
+				this.user.setPassword(password);
+				this.usersService.save(user);
 				return SUCCESS;
 			} else {
 				return BADREQUEST;
@@ -59,14 +63,24 @@ public class UserLoginController extends PageBaseAction implements ServletRespon
 	@SuppressWarnings("unchecked")
 	@Action("login")
 	public String login(){
-		User user = usersService.getByLoginNameAndPassword(loginName, password);
+		User user = new User();
+		user.setLoginName(loginName);
+		user.setPassword(password);
+		this.user = usersService.getByLoginNameAndPassword(user);
 		Cookie cookie;
 		if ( user != null ){
 			try {
+				
+				// Token cookie
 				cookie = new Cookie(LoginInterceptor.COOKIE_REMEMBERME_KEY, usersService.getCurrentCookiesValue());
 				cookie.setMaxAge(60 * 60 * 24 * 14);
 				response.addCookie(cookie);
-				session.put(LoginInterceptor.USER_SESSION_KEY, user);
+				
+				// UserId cookie
+				cookie = new Cookie(LoginInterceptor.COOKIE_USER_ID, this.user.getId().toString());
+				cookie.setMaxAge(60 * 60 * 24 * 14);
+				response.addCookie(cookie);
+				session.put(LoginInterceptor.USER_SESSION_KEY, this.user);
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

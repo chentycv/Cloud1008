@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
 import java.util.List;
 
+import org.dom4j.util.UserDataAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +34,8 @@ public class UsersServiceImpl implements UsersService {
     private int tokenLength = DEFAULT_TOKEN_LENGTH;
 
     private PersistentLogin persistentLogin;
+    
+    private User user;
 
 	@Override
 	@Transactional
@@ -66,20 +69,21 @@ public class UsersServiceImpl implements UsersService {
 
 	@Override
 	@Transactional
-	public User getByLoginName(String loginName) {
-		return usersDAO.getByLoginName(loginName);
+	public User getByLoginName(User user) {
+		return usersDAO.getByLoginName(user.getLoginName());
 	}
 
 	@Override
 	@Transactional
-	public User getByLoginNameAndPassword(String loginName, String password) {
-		User user = usersDAO.getByLoginNameAndPassword(loginName, password);
-		if ( user != null ) {
+	public User getByLoginNameAndPassword(User user) {
+		this.user = usersDAO.getByLoginNameAndPassword(user.getLoginName(), user.getPassword());
+		if ( this.user != null ) {
 			persistentLogin = new PersistentLogin();
 			persistentLogin.setSeries(generateSeriesData());
 			persistentLogin.setToken(generateTokenData());
+			persistentLogin.setUserId(this.user.getId());
 			persistentLoginDAO.save(persistentLogin);
-			return user;
+			return this.user;
 		} else {
 			return null;
 		}
@@ -96,6 +100,7 @@ public class UsersServiceImpl implements UsersService {
 			token = generateTokenData();
 			persistentLogin.setSeries(series);
 			persistentLogin.setToken(token);
+			persistentLoginDAO.update(persistentLogin);
 			return usersDAO.get(persistentLogin.getUserID());
 		} else {
 			return null;
@@ -107,6 +112,13 @@ public class UsersServiceImpl implements UsersService {
 	public String getCurrentCookiesValue() throws UnsupportedEncodingException {
 		return Base64Encode(persistentLogin.getSeries() + ":" + persistentLogin.getToken());
 	}
+	
+	@Override
+	@Transactional
+	public List<User> getAllBySearchTerm(String searchTerm) {
+		return usersDAO.getAllBySearchTerm(searchTerm);
+	}
+
 	
 	private String Base64Decode(String value) throws UnsupportedEncodingException{
 		return new String( Base64.decode(value.getBytes("ASCII")), "ASCII" ) ;
@@ -127,8 +139,4 @@ public class UsersServiceImpl implements UsersService {
         random.nextBytes(newToken);
         return new String(Base64.encode(newToken));
     }
-
-
-
-
 }

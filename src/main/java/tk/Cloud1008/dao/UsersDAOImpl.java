@@ -76,4 +76,12 @@ public class UsersDAOImpl implements UsersDAO {
 			return users.get(0);
 		}
 	}
+
+	@Override
+	public List<User> getAllBySearchTerm(String searchTerm) {
+		Query query = sessionFactory.getCurrentSession().createQuery(
+				"FROM User WHERE loginName like :searchTerm OR nickname like :searchTerm");
+		query.setParameter("searchTerm", '%' + searchTerm + '%');
+		return  query.list();
+	}
 }

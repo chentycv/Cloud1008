@@ -20,3 +20,13 @@ if(typeof window.console.markTimeline == 'undefined') {
   window.console.markTimeline = function(){};
 }
 window.console.clear = function(){};
+
+// ready event
+semantic.ready = function(){
+
+};
+
+// attach ready event
+$(document)
+  .ready(semantic.ready)
+;

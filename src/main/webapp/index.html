@@ -28,7 +28,7 @@
   document.write('<script src="' + jQuery + '"><\/script>');
 }());
 </script>
-
+    
 <!-- Effects -->
 <script src="javascript/library/easing.min.js"></script>
 <script src="javascript/library/highlight.min.js"></script>
@@ -47,6 +47,7 @@
 <script src="javascript/menu.js"></script>
 <script src="javascript/dropdown.js"></script>    
 <script src="javascript/modal.js"></script>
+<script src="javascript/init.js"></script>
     
 <!-- The style sheets -->
 <link rel="stylesheet" type="text/css" class="ui" href="stylesheets/semantic.min.css">
@@ -112,18 +113,11 @@
         </div>
         <div class="results"></div>
       </div>
-      <a class="item launch-toc-friend-details">
-        <b>李强</b>
-      </a>
-      <a class="item launch-toc-friend-details">
-        <b>李强强</b>
-      </a>
-      <a class="item launch-toc-friend-details">
-        <b>李大强</b>
-      </a>
-      <a class="item launch-toc-friend-details">
-        <b>超级李强</b>
-      </a>
+      <div class="launch-toc-friend-details">
+          <a class="item">
+            <b>李强</b>
+          </a>
+      </div>
     </div>     
 
     <!-- Friend details sidebar -->
@@ -133,7 +127,7 @@
       </a>  
       <div class="item title">
         <h3>
-            <i class="user icon"></i><b>李强</b>
+            <i class="user icon"></i><b data="loginName">李强</b>
         </h3>
       </div>
 
@@ -142,10 +136,10 @@
         <div class="ui button">删除好友</div>
       </div>
       <div class="item">
-        <i class="text telephone icon"></i> <b>1388888888</b>
+        <i class="text telephone icon"></i> <b data="telephone">1388888888</b>
       </div>
       <div class="item">
-        <i class="mail outline icon"></i> <b>Liqiang@qq.com</b>
+        <i class="mail outline icon"></i> <b data="email">Liqiang@qq.com</b>
       </div>
 
     </div>    

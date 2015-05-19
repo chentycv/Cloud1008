@@ -53,8 +53,8 @@ public class GroupsController extends RestBaseAction {
 		return httpHeaders.withStatus(200);
 	}
 	
-	// GET /rest/groups/{id}/allusers
-	public HttpHeaders allusers() {
+	// GET /rest/groups/{id}/users
+	public HttpHeaders users() {
 		usersgroups = GroupsService.getUserGroup(Long.parseLong(id));
 		model = usersgroups;
 		return httpHeaders.withStatus(200);
