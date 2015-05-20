@@ -28,28 +28,47 @@ semantic.menu.ready = function() {
     renderMenuFriends: function(users){
         
       // Update the users model
-      if (users) { this.renderMenuFriends.users = users; };
+      if (users) { 
+        $menuFriends.data("friends", users);
+      } else {
+        users = $menuFriends.data();
+      }
      
+      // Sort the users array
+      users.sort(function(a, b){
+        return (!a.new);
+      });
+        
       // Clear the model
-      $launchTocFriendDetails.html("");
+      $menuFriends.find(".item.launch-toc-new-friend-details").remove();
+      $menuFriends.find(".item.launch-toc-friend-details").remove();
         
       for (var i in users){
-         var friendElement = $friendTemplete.clone();
+         var friendElement = ( users[i].new ? $newFriendTemplete : $friendTemplete).clone();
          friendElement.find("b").html(users[i].loginName);
           
          // Show the details of a friend
          friendElement.on('click', users[i], function(event) {
             
+            // Adapt to the new friend entity
+            if (event.data.new || event.data.searched ){
+                $menuFriendDetails.find("#view-file").addClass("disabled");
+                $menuFriendDetails.find("#delete-friend").html("加为好友");
+            } else {
+                $menuFriendDetails.find("#view-file").removeClass("disabled");
+                $menuFriendDetails.find("#delete-friend").html("删除好友");
+            }
+             
             // Set the content of the elements
             $menuFriendDetails.find("[data='loginName']").html(event.data.loginName);
-            $menuFriendDetails.find("[data='telephone']").html(event.data.mobile);
-            $menuFriendDetails.find("[data='email']").html(event.data.email);
+            $menuFriendDetails.find("[data='telephone']").html(event.data.mobile === "" ? "暂无" : event.data.mobile );
+            $menuFriendDetails.find("[data='email']").html(event.data.email === "" ? "暂无" : event.data.email);
              
             // Show the siderbar
             $menuFriendDetails.sidebar('toggle');
             event.preventDefault();
          });
-         friendElement.appendTo($launchTocFriendDetails);
+         friendElement.appendTo($menuFriends);
       } 
     }
   };
@@ -78,9 +97,9 @@ semantic.menu.ready = function() {
     })
   ;
     
-  $friendTemplete = $menuFriends.find(".launch-toc-friend-details .item").first(),
-  $launchTocFriendDetails = $menuFriends.find(".launch-toc-friend-details"),
- 
+  $friendTemplete = $menuFriends.find(".item.launch-toc-friend-details").first();
+  $newFriendTemplete = $menuFriends.find(".item.launch-toc-new-friend-details").first(),
+
   $('#toc .launch-toc-friends,  #toc-friends .item.title.back')
     .on('click', function(event) {
       $menuFriends.sidebar('toggle');
@@ -94,23 +113,50 @@ semantic.menu.ready = function() {
 		  success: function (friends) {
               var users = [];
               var renderTrigger = 0;
-              for(var i = 0; i < friends.length; i++){
+              var usersDegrees = {};
+              
+              // Update the degrees of users graph
+              for(var i in friends){
+                if ( semantic.init.handler.user.id === friends[i].userAId ){
+                    if (usersDegrees[friends[i].userBId] !== undefined ) {
+                      usersDegrees[friends[i].userBId] ++;
+                    } else {
+                      usersDegrees[friends[i].userBId] = 0;
+                    }
+                } else {
+                    if (usersDegrees[friends[i].userAId] !== undefined ) {
+                      if (usersDegrees[friends[i].userAId] === 0) {
+                        usersDegrees[friends[i].userAId] = 2;
+                      } else {
+                        usersDegrees[friends[i].userAId] ++;
+                      }
+                    } else {
+                      usersDegrees[friends[i].userAId] = 1;
+                    }
+                }
+              }
+              
+              // Request the user entities
+              for(var userId in usersDegrees){
                   $.ajax({
-                    url : './rest/users/' + friends[i].userBId + '.json',
+                    url : './rest/users/' + userId + '.json',
                     type : 'get',
                     data : {},
                     success: function (user) {
-                        users.push(user);
+                        
+                        // Append new property and user entity
+                        switch  (usersDegrees[user.id]){
+                            case 1: user.new = true; users.push(user); break;
+                            case 2: user.new = false; users.push(user); break;
+                        }
                         
                         // Render the friend details menu when all user got
-                        if ( ++renderTrigger == friends.length){
+                        if ( ++renderTrigger == Object.keys(usersDegrees).length){
                             semantic.menu.handler.renderMenuFriends(users);
                         }
                     }
                   }); 
               }
-              
-
           },
           error: function (errormessage) {
           }
@@ -119,6 +165,64 @@ semantic.menu.ready = function() {
       event.preventDefault();
     })
   ;    
+
+  // The search input in friend menu
+  var $menuFriendsSearch = $menuFriends.find(".ui.icon.input");
+    
+  // The search icon onclick callback 
+  $menuFriendsSearch.find(".search").on("click", function(){
+      
+    // Find the search button
+    var searchBottom = $menuFriendsSearch.find(".search");
+      
+    // Perserve the friends
+    if ($menuFriendsSearch.data("friends") === undefined)  {
+      $menuFriendsSearch.data( "friends", $menuFriends.data("friends") );
+    }
+    
+    if (searchBottom.hasClass("remove")) {
+        
+      // Updat the search input icon
+      searchBottom.removeClass("remove");
+      $menuFriendsSearch.find("input").val("");
+      semantic.menu.handler.renderMenuFriends($menuFriendsSearch.data("friends"));       
+        
+    } else {
+        
+      // Change the icon of the input
+      searchBottom.addClass("remove");
+    
+      // Get the value of search input 
+      var searchTerm = $menuFriendsSearch.find("input").val();
+      
+      // Request the users by searchTerm
+      $.ajax({
+        url : './rest/users.json?searchTerm=' + searchTerm,
+        type : 'get',
+        data : {},
+        success: function (users) {
+            
+          // Initlizate the hide list
+          var hideUsers = $menuFriends.data();
+          var hideIdList = {};
+          for (var i in hideUsers){
+            hideIdList[hideUsers[i].id] = true;
+          }
+          
+          // Filter by the hide list
+          for (var i in users){
+            if (hideIdList[users[i].id]) {
+              users.splice(i, 1);
+            } else {
+              users[i].searched = true;
+            }
+          }
+
+          semantic.menu.handler.renderMenuFriends(users);                      
+        }
+      }); 
+    }
+  });
     
   // Friend details sidebar
   $menuFriendDetails

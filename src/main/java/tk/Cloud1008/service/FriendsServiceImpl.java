@@ -32,13 +32,14 @@ public class FriendsServiceImpl implements FriendsService {
 		Long setUserAId = friend.getUserAId();
 		Long setUserBId = friend.getUserBId();
 		
-		if (setUserAId > setUserBId) {
-			setUserAId = setUserAId ^ setUserBId;
-			setUserBId = setUserAId ^ setUserBId;
-			setUserAId = setUserBId ^ setUserAId;
-		}
+//		if (setUserAId > setUserBId) {
+//			setUserAId = setUserAId ^ setUserBId;
+//			setUserBId = setUserAId ^ setUserBId;
+//			setUserAId = setUserBId ^ setUserAId;
+//		}
 		
-		if ( friendsDAO.getByUserAIdAndUserBId(setUserAId, setUserBId) == null){
+		if ( setUserAId != setUserBId 
+			 && friendsDAO.getByUserAIdAndUserBId(setUserAId, setUserBId) == null){
 			friendsDAO.save(friend);
 			return friend;
 		} else {
