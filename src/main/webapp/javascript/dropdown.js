@@ -62,6 +62,10 @@ semantic.dropdown.ready = function() {
 
           // Clear the cookies
           document.cookie = "";
+            
+          // Hide all the modal
+          semantic.menu.handler.hideAllMenus();
+          
         },
         error: function (errormessage) {
         }

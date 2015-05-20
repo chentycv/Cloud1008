@@ -25,6 +25,15 @@ semantic.menu.ready = function() {
     
   // event handlers
   semantic.menu.handler = {
+    
+    hideAllMenus: function(){
+      $menu.sidebar('hide');
+      $menuFriends.sidebar('hide');
+      $menuFriendDetails.sidebar('hide');
+      $menuGroups.sidebar('hide');
+      $menuGroupMembers.sidebar('hide');
+    },
+    
     renderMenuFriends: function(users){
         
       // Update the users model
@@ -49,7 +58,13 @@ semantic.menu.ready = function() {
           
          // Show the details of a friend
          friendElement.on('click', users[i], function(event) {
+             
+            // Close the friends modal
+            $menuFriends.sidebar('hide');
             
+            // Update the data of the friend detais
+            $menuFriendDetails.data("user", event.data);          
+             
             // Adapt to the new friend entity
             if (event.data.new || event.data.searched ){
                 $menuFriendDetails.find("#view-file").addClass("disabled");
@@ -235,11 +250,59 @@ semantic.menu.ready = function() {
   $('#toc-friend-details .item.title.back')
     .on('click', function(event) {
       $menuFriendDetails.sidebar('toggle');
+      
+      // Show the friends modal
+      $('#toc .launch-toc-friends').click();
       event.preventDefault();
     })
   ;
     
+  // The view file callback
+  $menuFriendDetails.find("#view-file").on("click", function(event){
+    console.log($menuFriendDetails.data("user"))
+  })
+  ;
     
+  // The delete friend or add friend callback
+  $menuFriendDetails.find("#delete-friend").on("click", function(event){
+    var user = $menuFriendDetails.data("user");
+    
+    if ( $menuFriendDetails.find("#delete-friend").html() == "加为好友" ){
+        $.ajax({
+          url  : './rest/friends.json',
+          type : 'post',
+          data : JSON.stringify({userAId: semantic.init.handler.user.id, userBId: user.id }),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (friend) {
+              $('#toc-friend-details .item.title.back').click();
+          },
+          error: function (errormessage) {
+              $('#toc-friend-details .item.title.back').click();
+          }
+        });
+    } else {
+        $.ajax({
+          url  : './rest/friends/' + semantic.init.handler.user.id + '.json',
+          type : 'delete',
+          data: JSON.stringify({ userAId: semantic.init.handler.user.id, userBId: user.id }),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (friend) {
+              $('#toc-friend-details .item.title.back').click();
+          },
+          error: function (errormessage) {
+              $('#toc-friend-details .item.title.back').click();
+          }
+        });
+    }
+    
+    // Update the search icon
+    $menuFriendsSearch.find(".search").removeClass("remove");
+    $menuFriendsSearch.find("input").val("");
+  })
+  ;
+  
   // Groups sidebar
   $menuGroups
     .sidebar({

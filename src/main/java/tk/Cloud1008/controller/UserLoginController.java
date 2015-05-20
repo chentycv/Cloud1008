@@ -105,7 +105,13 @@ public class UserLoginController extends PageBaseAction implements ServletRespon
 					cookie.setValue("");
 					cookie.setMaxAge(0);
 					response.addCookie(cookie);
-					return SUCCESS;
+				}
+				
+				if (LoginInterceptor.COOKIE_USER_ID.equals(cookie
+						.getName())) {
+					cookie.setValue("");
+					cookie.setMaxAge(0);
+					response.addCookie(cookie);
 				}
 			}
 		}

@@ -1,15 +1,9 @@
 semantic.init = {};
 
 semantic.init.handler = {
-};
-
-// ready event
-semantic.init.ready = function(){
-    
-  // Show login modal when no cookies
-  if (document.cookie === ""){
-      semantic.modal.handler.showLoginModal();
-  } else {
+  
+  // Update the user profile
+  updateUser : function(){
     
     // Sent http request when modal is actived
     var cookies = document.cookie.split("; ")
@@ -31,6 +25,17 @@ semantic.init.ready = function(){
         error: function (errormessage) {
       }
     });
+  }    
+};
+
+// ready event
+semantic.init.ready = function(){
+    
+  // Show login modal when no cookies
+  if (document.cookie === ""){
+      semantic.modal.handler.showLoginModal();
+  } else {
+    semantic.init.handler.updateUser();
   }
 };
 

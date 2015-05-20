@@ -62,7 +62,14 @@ public class FriendsServiceImpl implements FriendsService {
 	@Override
 	@Transactional
 	public Friend delete(Friend friend) {
-		friendsDAO.delete(friend);
+		this.friend = friendsDAO.getByUserAIdAndUserBId(friend.getUserAId(), friend.getUserBId());
+		if (this.friend != null){
+			friendsDAO.delete(this.friend);
+		}
+		this.friend = friendsDAO.getByUserAIdAndUserBId(friend.getUserBId(), friend.getUserAId());
+		if (this.friend != null){
+			friendsDAO.delete(this.friend);
+		}
 		return friend;
 	}
 

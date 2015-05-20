@@ -117,6 +117,9 @@ semantic.modal.ready = function() {
 
           	// Clear the input form 
           	$form.form('clear');
+            
+            // Update the user profile
+            semantic.init.handler.updateUser();
           },
           error: function (errormessage) {
 			$loginModal.find(".error.message").show();

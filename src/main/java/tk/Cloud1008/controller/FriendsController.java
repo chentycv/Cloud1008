@@ -59,8 +59,7 @@ public class FriendsController extends RestBaseAction {
 
 	// DELETE /rest/friends/{id}
 	public HttpHeaders destroy() {
-		friend = new Friend();
-		friend.setId(Long.parseLong(id));
+		Friend friend = (Friend)model;
 		friendsService.delete(friend);
 		model = friend;
 		return httpHeaders.withStatus(200);
