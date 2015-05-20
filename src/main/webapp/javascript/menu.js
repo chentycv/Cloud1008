@@ -40,7 +40,7 @@ semantic.menu.ready = function() {
       if (users) { 
         $menuFriends.data("friends", users);
       } else {
-        users = $menuFriends.data();
+        users = $menuFriends.data("friends");
       }
      
       // Sort the users array
@@ -66,12 +66,32 @@ semantic.menu.ready = function() {
             $menuFriendDetails.data("user", event.data);          
              
             // Adapt to the new friend entity
-            if (event.data.new || event.data.searched ){
-                $menuFriendDetails.find("#view-file").addClass("disabled");
-                $menuFriendDetails.find("#delete-friend").html("加为好友");
+            if (event.data.id === semantic.init.handler.user.id) {
+              
+              // The friend user is himself
+              $menuFriendDetails.find("#view-file").addClass("disabled");
+              $menuFriendDetails.find("#delete-friend").addClass("disabled");
+                      
+              // Update the search input icon
+              $menuFriendsSearch.find(".search").removeClass("remove");
+              $menuFriendsSearch.find("input").val("");
+            } else if (event.data.new || event.data.searched ){
+                
+              // The friend user is from new (unconfirmed) or searched
+              $menuFriendDetails.find("#view-file").addClass("disabled");
+              $menuFriendDetails.find("#delete-friend").removeClass("disabled");
+              $menuFriendDetails.find("#delete-friend").html("加为好友");
+                
+                        
+              // Update the search input icon
+              $menuFriendsSearch.find(".search").removeClass("remove");
+              $menuFriendsSearch.find("input").val("");
             } else {
-                $menuFriendDetails.find("#view-file").removeClass("disabled");
-                $menuFriendDetails.find("#delete-friend").html("删除好友");
+                
+              // The friend user is the friends confirmed
+              $menuFriendDetails.find("#view-file").removeClass("disabled");
+              $menuFriendDetails.find("#delete-friend").removeClass("disabled");
+              $menuFriendDetails.find("#delete-friend").html("删除好友");
             }
              
             // Set the content of the elements
@@ -197,7 +217,7 @@ semantic.menu.ready = function() {
     
     if (searchBottom.hasClass("remove")) {
         
-      // Updat the search input icon
+      // Update the search input icon
       searchBottom.removeClass("remove");
       $menuFriendsSearch.find("input").val("");
       semantic.menu.handler.renderMenuFriends($menuFriendsSearch.data("friends"));       
