@@ -8,6 +8,7 @@ semantic.modal.ready = function() {
 
 	  $loginModal          = $('.login.modal'),
 	  $registerModal       = $('.register.modal'),
+	  $profileModal        = $('.profile.modal'),
 	    
 	  // alias
 	  handler
@@ -236,6 +237,16 @@ semantic.modal.ready = function() {
 	    event.preventDefault();
 	})
 	;
+    
+    
+	// Profie modal
+	$profileModal
+	  .modal({
+	    closable: false
+	  })
+	;
+    
+    semantic.modal.handler.showModal($profileModal);
 }
 
 // attach ready event
