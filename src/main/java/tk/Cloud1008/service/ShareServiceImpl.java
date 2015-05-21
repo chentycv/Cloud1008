@@ -36,16 +36,54 @@ public class ShareServiceImpl implements ShareService{
 		shareDAO.deleteShare(share);
 	}
 
+	@Transactional
 	@Override
 	public List<Share> select() {
 		// TODO Auto-generated method stub
+		shareDAO.selectShare();
 		return null;
 	}
 
+	@Transactional
 	@Override
 	public void update(Share share) {
 		// TODO Auto-generated method stub
 		shareDAO.updateShare(share);
+	}
+
+	@Transactional
+	@Override
+	public List<Share> getByFromUser(long fromuserid) {
+		// TODO Auto-generated method stub
+		return shareDAO.getByFromUser(fromuserid);
+	}
+
+	@Transactional
+	@Override
+	public List<Share> getByToUser(long touserid) {
+		// TODO Auto-generated method stub
+		return shareDAO.getByToUser(touserid);
+	}
+
+	@Transactional
+	@Override
+	public List<Share> getByToGroup(long togroupid) {
+		// TODO Auto-generated method stub
+		return shareDAO.getByToGroup(togroupid);
+	}
+
+	@Transactional
+	@Override
+	public List<Share> getByType(long fromuserid) {
+		// TODO Auto-generated method stub
+		return shareDAO.getByType(fromuserid);
+	}
+
+	@Transactional
+	@Override
+	public List<Share> getByFromUserToUser(long fromuserid, long touserids) {
+		// TODO Auto-generated method stub
+		return shareDAO.getByFromUserToUser(fromuserid, touserids);
 	}
 	
 

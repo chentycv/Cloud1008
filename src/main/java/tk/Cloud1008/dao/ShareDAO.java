@@ -14,6 +14,12 @@ public interface ShareDAO {
 	
 	public List<Share> selectShare();
 	
+	public List<Share> getByFromUser(long fromuserid);
+	public List<Share> getByToUser(long touserid);
+	public List<Share> getByToGroup(long togroupid);
+	public List<Share> getByType(long fromuserid);
+	public List<Share> getByFromUserToUser(long fromuserid,long touserids);
+	
 	public void updateShare(Share share);
 
 }
