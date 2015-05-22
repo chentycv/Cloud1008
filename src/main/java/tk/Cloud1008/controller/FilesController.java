@@ -12,6 +12,7 @@ import tk.Cloud1008.controller.base.RestBaseAction;
 import tk.Cloud1008.entity.File;
 import tk.Cloud1008.entity.User;
 import tk.Cloud1008.service.FileService;
+import tk.Cloud1008.service.HdfsService;
 import tk.Cloud1008.service.UsersService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -22,6 +23,8 @@ public class FilesController extends RestBaseAction {
 	
 	@Autowired
 	FileService fileService;
+	@Autowired
+	HdfsService hdfsService;
 	
 	private static final long serialVersionUID = 1L;
 	private String id;
