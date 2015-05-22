@@ -23,8 +23,6 @@ public class FilesController extends RestBaseAction {
 	
 	@Autowired
 	FileService fileService;
-	@Autowired
-	HdfsService hdfsService;
 	
 	private static final long serialVersionUID = 1L;
 	private String id;
