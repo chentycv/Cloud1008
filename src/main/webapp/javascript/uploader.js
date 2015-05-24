@@ -11,7 +11,7 @@ Dropzone.options.uploader = {
   thumbnailWidth: 350,
   thumbnailHeight: 350,
   clickable: "form .bigplus, form#uploader",
-  previewTemplate:  "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n  <div class=\"dz-placeholder\" ></div>\n  <div class=\"dz-filename\"><span data-dz-name></span>  <div class=\"ui icon input hidden\"> <input type=\"text\"> <i class=\"search icon\"></i> </div></div>\n   <div class=\"dz-size\" data-dz-size></div>\n <div class=\"ui checkbox\"> <input type=\"checkbox\"> <label></label> </div>\n <img data-dz-thumbnail />\n <div class=\"dz-progress\"><span class=\"dz-upload\" data-dz-uploadprogress></span></div>\n  </div>\n    <div class=\"dz-success-mark\"><span>✔</span></div>\n  <div class=\"dz-error-mark\"><span>✘</span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n </div>",
+  previewTemplate:  "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n  <div class=\"dz-placeholder\" ></div>\n  <div class=\"dz-filename\"><span data-dz-name></span>  <div class=\"ui icon input hidden\"> <input type=\"text\"> <i class=\"icon\"><i class=\"checkmark icon\"></i> <i class=\"remove icon\"></i> </i> </div></div>\n   <div class=\"dz-size\" data-dz-size></div>\n <div class=\"ui checkbox\"> <input type=\"checkbox\"> <label></label> </div>\n <img data-dz-thumbnail />\n <div class=\"dz-progress\"><span class=\"dz-upload\" data-dz-uploadprogress></span></div>\n  </div>\n    <div class=\"dz-success-mark\"><span>✔</span></div>\n  <div class=\"dz-error-mark\"><span>✘</span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n </div>",
   dictRemoveFile: "",
   dictCancelUpload: "",
   resize: function(file) {
@@ -96,8 +96,43 @@ myDropzone.on("success", function(file) {
   var dzDetails = $( dzPreview ).find(".dz-details").first();
   var dzPlaceholder = $( dzDetails ).find(".dz-placeholder").first();
   var dzThumbnail = $( dzDetails ).find("img").first();
+  var dzName = $( dzDetails ).find("span").first();
+  var dzInput = $( dzDetails ).find(".ui.icon.input").first();
+  
+  // Bind the event of dzName and dzInput
+  dzName.on("click", function(event){
     
-  // Bind the event of 
+    // Get the text from dzName and copy to input
+    var filename = dzName.text();  
+    dzName.data("filename", filename);
+    dzInput.find("input").val(filename);
+      
+    // Update hidden class
+    dzName.addClass("hidden");
+    dzInput.removeClass("hidden");
+  })
+  ;
+  
+  dzInput.find(".checkmark.icon").on("click", function(){
+    
+    // Get the text from dzInput and copy to dzName
+    var filename = dzInput.find("input").val();
+    dzName.text(filename);
+    dzName.data("filename", filename);
+      
+    // Update hidden class
+    dzName.removeClass("hidden");
+    dzInput.addClass("hidden");
+  })
+  ;
+    
+  dzInput.find(".remove.icon").on("click", function(){
+         
+    // Update hidden class      
+    dzName.removeClass("hidden");
+    dzInput.addClass("hidden");
+  })
+  ;
  
   
   // Update checkbox
