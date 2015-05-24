@@ -21,6 +21,9 @@ semantic.init.handler = {
         success: function (user) {
           semantic.dropdown.handler.updateUsername(user.loginName);
           semantic.init.handler.user = user;
+            
+          // Update the breadcrumb 
+          semantic.breadcrumb.handler.render([{id: 0, name: "主目录"}], "private");
       },
         error: function (errormessage) {
       }
@@ -33,10 +36,11 @@ semantic.init.ready = function(){
     
   // Show login modal when no cookies
   if (document.cookie === ""){
-      semantic.modal.handler.showLoginModal();
+    semantic.modal.handler.showLoginModal();
   } else {
     semantic.init.handler.updateUser();
   }
+    
 };
 
 // attach ready event

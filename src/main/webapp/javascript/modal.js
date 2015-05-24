@@ -28,6 +28,10 @@ semantic.modal.ready = function() {
 	  showRegisterModal: function() {
 	    $loginModal.modal('show');
 	  },
+        
+      showProfileModal: function() {
+	    $profileModal.modal('show');
+	  },
 
 	  hideAllModal: function() {
 	    $loginModal.modal('hide');
@@ -245,8 +249,41 @@ semantic.modal.ready = function() {
 	    closable: false
 	  })
 	;
+    $profileModal.find(".submit.button")
+	  .on('click', function(event){
+        
+        // Get the submit form in login form
+	    $form = $profileModal.find( ".form" );
+
+	    // Get some values from elements on the page:
+	    var mobile = $form.find( "input[name='mobile']" ).val(),
+	        email = $form.find( "input[name='email']" ).val();
+        
+        if (mobile.length >= 3 && email.length >= 3 )
+            $.ajax({
+              url  : './rest/users/' + semantic.init.handler.user.id + '.json', 
+              type : 'put',
+              data : JSON.stringify({mobile: mobile, email: email}),
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              success: function (msg) {
+                  
+                // Show login form 
+                $profileModal.modal("hide");
+
+                // Clear the input form 
+                $form.form('clear');
+              },
+              error: function (errormessage) {
+                $registerModal.find(".error.message").show();
+              }
+            });
+
+	    event.preventDefault();
+        
+    })
+    ;
     
-    semantic.modal.handler.showModal($profileModal);
 }
 
 // attach ready event

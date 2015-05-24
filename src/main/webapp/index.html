@@ -46,7 +46,9 @@
 <script src="javascript/index.js"></script>
 <script src="javascript/menu.js"></script>
 <script src="javascript/dropdown.js"></script>    
-<script src="javascript/modal.js"></script>
+<script src="javascript/modal.js"></script> 
+<script src="javascript/breadcrumb.js"></script>
+<script src="javascript/checkbox.js"></script>
 <script src="javascript/init.js"></script>
     
 <!-- The style sheets -->
@@ -261,11 +263,9 @@
         <div class="introduction">
           <div class="ui breadcrumb">
             <div class="divider"><h1><i class="disk outline icon"></i></h1></div>
-            <a class="section"><h2>李强</h2></a>
-              <div class="divider"><h2> / </h2></div>
-            <a class="section"><h2>主目录</h2></a>
-              <div class="divider"><h2> / </h2></div>
-            <div class="active section"><h2>T-Shirt</h2></div>
+            <a class="section"><h2 data="path"></h2></a>
+            <div class="divider"><h2>&nbsp;/&nbsp;</h2></div>
+            <div class="active section"><h2 data="path"></h2></div>
           </div>
         </div>
 
@@ -275,6 +275,10 @@
         <div class="tiny ui buttons">
           <div class="ui button">
             <i class="folder outline icon"></i>
+            新建文件夹
+          </div>
+          <div class="ui button">
+            <i class="checkmark box icon"></i>
             全选
           </div>
           <div class="ui button">
@@ -302,6 +306,9 @@
             <i class="folder outline icon"></i>
           </div>
           <div class="ui button">
+            <i class="checkmark box icon"></i>
+          </div>
+          <div class="ui button">
             <i class="copy icon"></i>
           </div>
           <div class="ui button">
@@ -324,10 +331,40 @@
     </div>
     -->
 
-    <form action="./add" id="uploader" class="main demo container dropzone" method="post" enctype="multipart/form-data">
+    <form action="./upload" id="uploader" class="main demo container dropzone" method="post" enctype="multipart/form-data">
         <div class="bigplus"></div>
+        <div class="ui close right rail">
+            <div class="ui" style="margin-top:20px" >
+                <div class="ui secondary vertical following fluid accordion menu">
+                    <div class="item">
+                    <div class="item">
+                      <div class="ui green statistic">
+                        <div class="value">
+                          27
+                        </div>
+                        <div class="label">
+                          可用空间(GB)
+                        </div>
+                      </div>
+                    </div>
+                    <div class="item">
+                      <div class="ui red statistic">
+                        <div class="value">
+                          8
+                        </div>
+                        <div class="label">
+                          已经使用(GB)
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </form>
     </div>
+    
 
     <div class="ui login small modal">
       <!-- <i class="close icon"></i> -->
@@ -423,14 +460,14 @@
               <div class="field">
                 <label>Email</label>
                 <div class="ui left icon input">
-                  <input name="email" type="text" placeholder="email">
+                  <input type="text" name="email" placeholder="email">
                   <i class="email icon"></i>
                 </div>
               </div>
               <div class="field">
                 <label>手机</label>
                 <div class="ui left icon input">
-                  <input name="email" type="text" placeholder="手机">
+                  <input type="text" name="mobile" placeholder="手机">
                   <i class="telephone icon"></i>
                 </div>
               </div>

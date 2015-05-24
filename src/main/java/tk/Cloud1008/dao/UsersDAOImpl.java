@@ -23,8 +23,13 @@ public class UsersDAOImpl implements UsersDAO {
 	@Override
 	public void update(User user) {
 		this.sessionFactory.getCurrentSession().update(user);
-	}
+	}	
 
+	@Override
+	public void merge(User user) {
+		this.sessionFactory.getCurrentSession().merge(user);
+	}	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getAll() {

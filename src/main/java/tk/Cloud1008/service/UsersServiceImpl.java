@@ -64,7 +64,15 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	@Transactional
 	public void update(User user) {
-		usersDAO.update(user);
+		this.user = usersDAO.get(user.getId());
+		usersDAO.merge(this.user);
+		if ( user.getEmail() != null) this.user.setEmail(user.getEmail());
+		if ( user.getGender() != null) this.user.setGender(user.getGender());
+		if ( user.getMobile() != null) this.user.setMobile(user.getMobile());
+		if ( user.getNickname() != null) this.user.setNickname(user.getNickname());
+		if ( user.getOnline() != null) this.user.setOnline(user.getOnline());
+		if ( user.getSpaceSize() != null) this.user.setSpaceSize(user.getSpaceSize());
+		if ( user.getUsedSize() != null) this.user.setUsedSize(user.getUsedSize());
 	}
 
 	@Override
@@ -111,6 +119,16 @@ public class UsersServiceImpl implements UsersService {
 	@Transactional
 	public String getCurrentCookiesValue() throws UnsupportedEncodingException {
 		return Base64Encode(persistentLogin.getSeries() + ":" + persistentLogin.getToken());
+	}
+	
+	@Override
+	@Transactional
+	public User getCurrentUser() {
+		if (persistentLogin != null){
+			return usersDAO.get(persistentLogin.getId());
+		} else {
+			return null;
+		}
 	}
 	
 	@Override

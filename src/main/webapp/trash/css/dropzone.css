@@ -59,6 +59,7 @@
   margin:0;
   overflow:hidden;
   position:absolute;
+  padding-top:100%;
 }
 .dropzone .dz-preview .dz-details img,
 .dropzone-previews .dz-preview .dz-details img {
@@ -72,7 +73,8 @@
 .dropzone-previews .dz-preview .dz-details .dz-size {
   padding-top: 100%;
   padding-left: 3px;
-  position: absolute;;
+  position: absolute;
+  right: 0;
 }
 .dropzone .dz-preview.dz-error .dz-error-mark,
 .dropzone-previews .dz-preview.dz-error .dz-error-mark {

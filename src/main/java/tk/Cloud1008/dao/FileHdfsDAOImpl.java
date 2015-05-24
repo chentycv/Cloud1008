@@ -18,7 +18,7 @@ public class FileHdfsDAOImpl implements FileHdfsDAO {
 	 
 	public FileHdfsDAOImpl(){
         conf =new Configuration();
-        conf.addResource(new Path("/home/grid/hadoop/hadoop-2.5.2/etc/hadoop/core-site.xml"));
+//        conf.addResource(new Path("/home/grid/hadoop/hadoop-2.5.2/etc/hadoop/core-site.xml"));
     }
 
     public FileHdfsDAOImpl(Configuration conf){

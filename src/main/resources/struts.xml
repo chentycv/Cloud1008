@@ -22,7 +22,7 @@
 	<constant name="struts.mapper.prefixMapping" value="/rest:rest,:struts" />
 	<constant name="struts.mapper.alwaysSelectFullNamespace"
 		value="false" /> 
-
+	<constant name="struts.multipart.maxSize" value="104857600" />
 	<package name="base-default" extends="struts-default">
 		<global-results>
 			 <result name="notfound" type="httpheader">

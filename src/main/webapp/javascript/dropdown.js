@@ -42,7 +42,9 @@ semantic.dropdown.ready = function() {
   ;
     
   $updateInformation.on('click', function(event) {
-      $menuGroupMembers.sidebar('toggle');
+          
+      // Show the profile
+      semantic.modal.handler.showProfileModal();
       event.preventDefault();
     })
   ;
@@ -73,7 +75,9 @@ semantic.dropdown.ready = function() {
       event.preventDefault();
     })
   ;
+
 }
+
 
 // attach ready event
 $(document)

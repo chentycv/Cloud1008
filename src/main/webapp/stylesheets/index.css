@@ -163,6 +163,15 @@ a:hover {
   border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Rails */
+#example .ui.close.right.rail > .ui.sticky.fixed.top {
+/*
+  width: 24%; 
+  right: 14px;
+  margin-top: 175px;
+*/
+}
+
 /* segment headers */
 #example .header.segment {
   position: relative;
@@ -1746,6 +1755,10 @@ body.progress.animated .ui.progress .bar {
   #example .main.container > .right.rail .sticky,
   #example .main.container > .tab > .right.rail .sticky {
     width: 200px;
+  }
+    
+  #example .ui.close.right.rail > .ui.sticky.fixed.top {
+    width: 21%;  
   }
 }
 @media only screen and (min-width : 1200px) and (max-width: 1355px) {

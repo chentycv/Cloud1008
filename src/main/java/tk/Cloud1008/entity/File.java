@@ -16,6 +16,7 @@ public class File {
 	private long parent;
 	private long owner;
 	private String path;
+	private String thumbnail;
 	
 	@Id
 	@GeneratedValue
@@ -63,5 +64,11 @@ public class File {
 		this.path = path;
 	}
 	
-	
+	@Column(name = "THUMBNAIL")
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
 }

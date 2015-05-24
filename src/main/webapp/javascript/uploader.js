@@ -4,14 +4,14 @@ Dropzone.autoDiscover = false;
 // "uploader" is the camelized version of the HTML element's ID
 Dropzone.options.uploader = {
   paramName: "upload", // The name that will be used to transfer the file
-  maxFilesize: 2, // MB
-  addRemoveLinks: true,
+  maxFilesize: 2048, // MB
+  addRemoveLinks: false,
   parallelUploads: 1,
-  acceptedFiles: "image/*",
+//  acceptedFiles: "image/*",
   thumbnailWidth: 350,
   thumbnailHeight: 350,
   clickable: "form .bigplus, form#uploader",
-  previewTemplate:  "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n   <div class=\"dz-size\" data-dz-size></div>\n  <div class=\"dz-placeholder\" ></div>\n <div class=\"dz-response\" ><strong><br/></strong></div>\n  <img data-dz-thumbnail />\n <div class=\"dz-progress\"><span class=\"dz-upload\" data-dz-uploadprogress></span></div>\n  </div>\n    <div class=\"dz-success-mark\"><span>✔</span></div>\n  <div class=\"dz-error-mark\"><span>✘</span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n <a class=\"dz-detail button tiny success \">Detail</a></div>",
+  previewTemplate:  "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n  <div class=\"dz-placeholder\" ></div>\n  <div class=\"dz-filename\"><span data-dz-name></span>  <div class=\"ui icon input hidden\"> <input type=\"text\"> <i class=\"search icon\"></i> </div></div>\n   <div class=\"dz-size\" data-dz-size></div>\n <div class=\"ui checkbox\"> <input type=\"checkbox\"> <label></label> </div>\n <img data-dz-thumbnail />\n <div class=\"dz-progress\"><span class=\"dz-upload\" data-dz-uploadprogress></span></div>\n  </div>\n    <div class=\"dz-success-mark\"><span>✔</span></div>\n  <div class=\"dz-error-mark\"><span>✘</span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n </div>",
   dictRemoveFile: "",
   dictCancelUpload: "",
   resize: function(file) {
@@ -65,48 +65,45 @@ Dropzone.prototype.addPreview = function(file) {
 
 
 // Create dropzones programmatically
-var myDropzone = new Dropzone("#uploader", { url: "./add"});
+var myDropzone = new Dropzone("#uploader", { url: "./upload" });
 
 // Listen to events
 myDropzone.on("success", function(file) {
+
   // Get response object 
-  var response = JSON.parse(file.xhr.response);
-
-  // Set the number plate result on each thunbnails
-	file.previewElement.getElementsByClassName("dz-response")[0]
-	.getElementsByTagName("strong")[0].innerHTML = response.result[0];
+  var path = file.xhr.response;
   
-  // Update file.id if undefined
-  if (file.id === undefined){file.id = response.id;}
+  // Create the file entity
+  $.ajax({
+		  url  : './rest/files.json',
+		  type : 'post',
+		  data : JSON.stringify({name: file.name,
+                                 owner: semantic.init.handler.user.id,
+                                 parent: semantic.breadcrumb.handler.getCurrentFile.id,
+                                 path: path,
+                                 size: file.size}),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (msg) {
 
-  // Set events of Details botton
-  file.previewElement.getElementsByClassName("dz-detail")[0].onclick = function (){
+          },
+          error: function (errormessage) {
+          }
+  });
+
+  // Get the reference of preview elements
+  var dzPreview = file.previewElement;
+  var dzDetails = $( dzPreview ).find(".dz-details").first();
+  var dzPlaceholder = $( dzDetails ).find(".dz-placeholder").first();
+  var dzThumbnail = $( dzDetails ).find("img").first();
     
-    // Http Get details by id
-    $.get( "./details/" + file.id, function( data ) {
-      if (data.result[0] === "success"){
+  // Bind the event of 
+ 
+  
+  // Update checkbox
+  var checkbox = dzDetails.find(".ui.checkbox").first();
+  semantic.checkbox.handler.update(checkbox);
 
-        // Convert details JSON string to object 
-        var details = JSON.parse(data.numberPlate["details"]);
-        var order = ["Grayscale", "Sobel", "Binarization"];
-        
-        // Append the details images to the thumbs
-        $(".clearing-thumbs").html("");
-        for(var i = 0; i < order.length; i++){
-          $(".clearing-thumbs").append('<li><a class="th" href="'+ details[order[i]] + '"><img data-caption="' + file.name +' (' + order[i] + ') ' + '" src=" '+ details[order[i]] +'" /></a></li>');         
-        }
-        
-        // Click on the thumbs and show it
-        $(".clearing-thumbs a").click();
-        $(".clearing-thumbs").fadeIn(300);
-
-        // Append event to close botton to hide the clearing-thumbs
-        $(".clearing-close").on("click", function(){
-          $(".clearing-thumbs").fadeOut(300);
-        });
-      }
-    });
-  };
 });
 
 myDropzone.on("removedfile", function(file) {

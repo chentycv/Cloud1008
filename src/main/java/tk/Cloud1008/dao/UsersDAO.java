@@ -15,10 +15,13 @@ public interface UsersDAO {
 	public void delete(User user);
 
 	public void update(User user);
+	
+	public void merge(User user);
 
 	public User getByLoginNameAndPassword(String loginName, String password);
 
 	public User getByLoginName(String loginName);
 
 	public List<User> getAllBySearchTerm(String searchTerm);
+
 }

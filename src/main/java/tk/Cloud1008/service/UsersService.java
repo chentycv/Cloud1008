@@ -13,6 +13,7 @@ public interface UsersService {
 	public void update(User user);
 	public User getByCooikes(String cookies) throws UnsupportedEncodingException, InvalidCookiesException;
 	public String getCurrentCookiesValue() throws UnsupportedEncodingException;
+	public User getCurrentUser();
 	public User getByLoginNameAndPassword(User user);
 	public User getByLoginName(User user);
 	public List<User> getAllBySearchTerm(String searchTerm);
