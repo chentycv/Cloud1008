@@ -223,6 +223,7 @@ myDropzone.on("success", function(file) {
     } else if ( file.type === "file" ){
         
         var link = document.createElement("a");
+        link.download = file.name;
         link.href = "./download?path=" + file.path + "&name=" + file.name;
         link.click();
     }
