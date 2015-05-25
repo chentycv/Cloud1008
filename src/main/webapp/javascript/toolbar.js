@@ -12,6 +12,7 @@ semantic.toolbar.ready = function(){
         $copy             = $toolbar.find("#copy"),
         $move             = $toolbar.find("#move"),
         $share            = $toolbar.find("#share"),
+        $delete           = $toolbar.find("#delete"),
 
         // alias
         handler
@@ -29,6 +30,11 @@ semantic.toolbar.ready = function(){
         var files = $myDropzone.data("files");
         files.push(file);
         myDropzone.renderPreviews(files);
+    })
+    ;
+    
+    $delete.on("click", function(){
+        
     })
     ;
 }

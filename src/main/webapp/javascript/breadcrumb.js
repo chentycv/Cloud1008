@@ -100,7 +100,6 @@ semantic.breadcrumb.ready = function(){
                             // Update the breadcrumb
                             semantic.breadcrumb.handler.render();
                               
-                              
                             // Deactive loader
                             semantic.loader.handler.deactivate();
                           },

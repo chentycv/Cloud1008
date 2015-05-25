@@ -58,15 +58,18 @@
 .dropzone .dz-preview .dz-details .dz-filename,
 .dropzone-previews .dz-preview .dz-details .dz-filename {
   margin: 5px;
-/*  overflow:hidden;*/
-/*  position:absolute;*/
-/*  padding-top:100%;*/
+  overflow: hidden;
+  height: 17px;
+  /* position: absolute; */
+  /* padding-top: 100%; */
 }
 
 .dropzone .dz-preview .dz-details .ui.icon.input,
 .dropzone-previews .dz-preview .dz-details .ui.icon.input {
   width: 100%;
   height: 17px;
+  position: absolute;
+  left: 0;
 }
 
 .dropzone .dz-preview .dz-details .icon,

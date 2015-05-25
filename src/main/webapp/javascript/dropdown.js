@@ -67,6 +67,9 @@ semantic.dropdown.ready = function() {
             
           // Hide all the modal
           semantic.menu.handler.hideAllMenus();
+            
+          // Remove all
+          myDropzone.renderPreviews([]);
           
         },
         error: function (errormessage) {

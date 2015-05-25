@@ -61,18 +61,20 @@ Dropzone.prototype.renderPreviews = function(files) {
     if (files === undefined) { 
         files = $myDropzone.data("files");
     } else {
+        
+        // Sort files by type
+        files.sort(function(a, b){
+            return a.type === "file" && b.type === "folder" ? 1 : -1;
+        });
+        
+        // Save files to $myDropzone
         $myDropzone.data("files", files);
     }
-    
-    // Sort files by type
-    files.sort(function(a, b){
-        return a.type === "file" && b.type === "folder";
-    });
     
     // Clean the dz-preview    
 	$(".dz-preview").remove();
 
-    
+    // Render the files
     for (var i in files){
         var file = files[i];
         this.files.push(file);
@@ -93,7 +95,7 @@ myDropzone.on("success", function(file) {
 
   // Get response object 
   var path = file.xhr ? file.xhr.response : undefined;
-
+    
   // Get the reference of preview elements
   var 
     dzPreview = $( file.previewElement ),
@@ -103,7 +105,12 @@ myDropzone.on("success", function(file) {
     dzName = dzDetails.find("span").first(),
     dzInput = dzDetails.find(".ui.icon.input").first(),
     dzSize = dzDetails.find(".dz-size").first();
-      
+  
+  // Remove the success mark not upload
+  if (path === undefined) {
+    dzPreview.find(".dz-success-mark").remove();
+  }  
+    
   // Bind the event of dzName and dzInput
   dzName.on("click", function(event){
     
@@ -128,6 +135,31 @@ myDropzone.on("success", function(file) {
     // Update hidden class
     dzName.removeClass("hidden");
     dzInput.addClass("hidden");
+      
+    // Update the file
+    var file = dzDetails.data("file");
+    file.name = filename;
+    
+    // Update the file of server
+    $.ajax({
+          url  : './rest/files/' + file.id + '.json',
+          type : 'put',
+          data : JSON.stringify({id: file.id,
+                                 name: file.name,
+                                 owner: file.owner,
+                                 parent: file.parent,
+                                 path: file.path,
+                                 size: file.size,
+                                 thumbnail: file.thumbnail,
+                                 type: file.type}),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (file) {
+              dzDetails.data("file", file);
+          },
+          error: function (errormessage) {
+          }
+    });
   })
   ;
     
