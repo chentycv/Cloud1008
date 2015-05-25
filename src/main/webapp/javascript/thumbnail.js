@@ -31,7 +31,7 @@ semantic.thumbnail.ready = function(){
         
             if (file.type === "folder") {
                 return icons.folder;                
-            } else if ( file.type === "file" ){ 
+            } else { 
                 var ext = semantic.thumbnail.handler.getFileExtension(file.name);
                 switch (ext){
                     case "doc": return icons.doc; break;

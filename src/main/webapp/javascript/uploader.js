@@ -82,11 +82,6 @@ Dropzone.prototype.renderPreviews = function(files) {
         file.status = Dropzone.ADDED;
         this.emit("addedfile", file);
         this.emit("success", file);
-        if (file.thumbnail && file.thumbnail !== ""){
-            this.emit("thumbnail", file, file["thumbnail"]);
-        } else {
-            this.emit("thumbnail", file, semantic.thumbnail.handler.getThumbnail(file));
-        }
     }
 };
 
@@ -98,6 +93,12 @@ var $myDropzone = $(myDropzone);
 // Listen to events
 myDropzone.on("success", function(file) {
 
+  if (file.thumbnail && file.thumbnail !== ""){
+    this.emit("thumbnail", file, file["thumbnail"]);
+  } else {
+     this.emit("thumbnail", file, semantic.thumbnail.handler.getThumbnail(file));
+  }
+    
   // Get response object 
   var path = file.xhr ? file.xhr.response : undefined;
     
