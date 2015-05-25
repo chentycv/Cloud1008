@@ -24,9 +24,23 @@ public class FileServiceImpl implements FileService{
 	
 	@Transactional
 	@Override
-	public List<File> select(long parentid, long owner) {
+	public List<File> getByParent(long parent) {
 		// TODO Auto-generated method stub
-		return fileDAO.selectFileEntityByParentID(parentid, owner);
+		return fileDAO.getByParent(parent);
+	}
+	
+	@Transactional
+	@Override
+	public List<File> getByOwner(long owner) {
+		// TODO Auto-generated method stub
+		return fileDAO.getByOwner(owner);
+	}
+	
+	@Transactional
+	@Override
+	public List<File> getByParentAndOwner(long parent, long owner) {
+		// TODO Auto-generated method stub
+		return fileDAO.getByParentAndOwner(parent, owner);
 	}
 	
 	public FileDAO getFileDAO() {
@@ -56,7 +70,7 @@ public class FileServiceImpl implements FileService{
 	public void delete(File file) {
 		// TODO Auto-generated method stub
 		file = fileDAO.selectFile(file.getId());
-		List<File> fileobj  = fileDAO.selectFileEntityByParentID(file.getId(), file.getOwner());
+		List<File> fileobj  = fileDAO.getByParentAndOwner(file.getId(), file.getOwner());
 		this.fileDAO.deleteFileEntity(file);
 		for(Object obj : fileobj)
 		{

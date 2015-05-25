@@ -33,25 +33,32 @@ public class DownloadController extends PageBaseAction {
 	@Autowired
 	UsersService usersService;
 
-	private String filename;
-	private File file;
+	private String path;
+	private String name;
 	private InputStream inputStream;
-	
-	@SuppressWarnings("deprecation")
-	@Action(value = "download", results = { @Result(name="success", type="stream") })
+
+	@Action(value = "download", results = { @Result(name = "success", type = "stream", params = { "contentType", "application/octet-stream" })})
 	public String download() throws IOException {
 
 		// Download file to /tmp
-		hdfsService.download("/user/root/" + filename, "/tmp/");
-		inputStream = new FileInputStream(new File("/tmp/" + filename ));
+		hdfsService.download("/user/root/" + path, "/tmp/");
+		inputStream = new FileInputStream(new File("/tmp/" + path ));
 		return SUCCESS;
 	}
 
-	public void setFilename(String filename) {
-		this.filename = filename;
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public InputStream getInputStream() {
 	    return inputStream;
+	}
+	
+	public String getContentDisposition() {
+		return "attachment;filename=\""+ name +"\"";
 	}
 }

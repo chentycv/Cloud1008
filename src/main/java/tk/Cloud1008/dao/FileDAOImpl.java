@@ -47,16 +47,37 @@ public class FileDAOImpl implements FileDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<File> selectFileEntityByParentID(long parentid, long owner) {
+	public List<File> getByParent(long parent) {
 		// TODO Auto-generated method stub
 		Query query = this.sessionFactory.getCurrentSession()
-				.createQuery("from File f where f.parent = :id and f.owner = :owner");
-		query.setParameter("id", parentid);
-		query.setParameter("owner", owner);
+				.createQuery("from File f where f.parent = :parent");
+		query.setParameter("parent", parent);
 		
 		return (List<File>) query.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<File> getByOwner(long owner) {
+		// TODO Auto-generated method stub
+		Query query = this.sessionFactory.getCurrentSession()
+				.createQuery("from File f where f.owner = :owner");
+		query.setParameter("owner", owner);
+		
+		return (List<File>) query.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<File> getByParentAndOwner(long parent, long owner) {
+		// TODO Auto-generated method stub
+		Query query = this.sessionFactory.getCurrentSession()
+				.createQuery("from File f where f.parent = :id and f.owner = :owner");
+		query.setParameter("id", parent);
+		query.setParameter("owner", owner);
+		
+		return (List<File>) query.list();
+	}
 	@Override
 	public void updateFile(File file) {
 		// TODO Auto-generated method stub

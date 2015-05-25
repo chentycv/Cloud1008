@@ -11,7 +11,11 @@ public interface FileService {
 	public void delete(long id);
 	public void delete(File file);
 	
-	public List<File> select(long id, long owner);
-	
 	public void update(File file);
+
+	public List<File> getByParent(long parent);
+
+	public List<File> getByOwner(long owner);
+
+	public List<File> getByParentAndOwner(long parent, long owner);
 }

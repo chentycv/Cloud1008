@@ -13,7 +13,8 @@ semantic.init.handler = {
         cookies[cookieStr[0]] = cookieStr[1];
         delete cookies[i];
     }
-      
+    
+    // Get current user information  
     $.ajax({
       url  : './rest/users/' + cookies["wallet.cookie.userid"] +'.json',
       type : 'get',
@@ -24,6 +25,22 @@ semantic.init.handler = {
             
           // Update the breadcrumb 
           semantic.breadcrumb.handler.render([{id: 0, name: "主目录"}], "private");
+            
+            // Remove all dz-preview
+            $(".dz-preview.dz-success.dz-image-preview").remove();
+            
+            // Get all files of current user
+            $.ajax({
+              url  : './rest/users/' + semantic.init.handler.user.id + '/files.json',
+              type : 'get',
+              data : {},
+              success: function (files) {
+                myDropzone.renderPreviews(files);
+              },
+              error: function (errormessage) {
+              }
+            })
+            ;
       },
         error: function (errormessage) {
       }

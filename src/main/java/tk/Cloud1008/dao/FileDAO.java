@@ -11,10 +11,15 @@ public interface FileDAO {
 	public void deleteFileEntityByID(long id);
 	
 	public void deleteFileEntity(File file);
-	
-	public List<File> selectFileEntityByParentID(long id,long owner);
+
 	public File selectFile(long id);
 	
 	public void updateFile(File file);
+
+	public List<File> getByParent(long parent);
+
+	public List<File> getByOwner(long owner);
+
+	public List<File> getByParentAndOwner(long parent, long owner);
 
 }

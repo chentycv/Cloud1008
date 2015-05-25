@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import tk.Cloud1008.controller.base.RestBaseAction;
+import tk.Cloud1008.entity.File;
 import tk.Cloud1008.entity.Friend;
 import tk.Cloud1008.entity.User;
+import tk.Cloud1008.service.FileService;
 import tk.Cloud1008.service.FriendsService;
 import tk.Cloud1008.service.UsersService;
 
@@ -22,11 +24,15 @@ public class UsersController extends RestBaseAction {
 	@Autowired
 	FriendsService friendsService;
 	
+	@Autowired
+	FileService fileService;
+	
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private User user = new User();
 	private List<User> users;
 	private List<Friend> friends;
+	private List<File> files;
 	
 	private Object model = user;
 	
@@ -83,6 +89,13 @@ public class UsersController extends RestBaseAction {
 		user = usersService.get(Long.parseLong(id));
 		friends = friendsService.getAllByUser(user);
 		model = friends;
+		return httpHeaders.withStatus(200);
+	}
+	
+	// GET /rest/users/{id}/files
+	public HttpHeaders files() {
+		files = fileService.getByParentAndOwner(0, Long.parseLong(id));
+		model = files;
 		return httpHeaders.withStatus(200);
 	}
 	
