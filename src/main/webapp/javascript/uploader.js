@@ -139,14 +139,40 @@ myDropzone.on("success", function(file) {
   })
   ; 
      
-  $.merge(dzPlaceholder, dzPreview).on("click", function(event){
+  $.merge(dzPlaceholder, dzThumbnail).on("click", function(event){
     var file = dzDetails.data("file");
     if ( file.type === "folder" ){
+        
+        
+        // Active loader
+        semantic.loader.handler.active();
+        
+        // Get all files of current folder
+        $.ajax({
+          url  : './rest/files.json?parentid=' + file.id,
+          type : 'get',
+          data : {},
+          success: function (files) {
+              
+            // Update the dropzone
+            myDropzone.renderPreviews(files);
+              
+            // Update the breadcrumb
+            semantic.breadcrumb.handler.getFiles().push(file);
+            semantic.breadcrumb.handler.render();
+              
+              
+            // Deactive loader
+            semantic.loader.handler.deactivate();
+          },
+          error: function (errormessage) {
+          }
+        })
+        ;
         
     } else if ( file.type === "file" ){
         
         var link = document.createElement("a");
-//        link.download = file.name;
         link.href = "./download?path=" + file.path + "&name=" + file.name;
         link.click();
     }

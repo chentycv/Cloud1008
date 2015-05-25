@@ -70,12 +70,45 @@ semantic.breadcrumb.ready = function(){
 
                     // Bind the event to the sections
                     section.on("click", section, function(event){
-                        var section = event.data;
-                        var files = $breadcrumb.data("files");
-                        var index = section.data("index");
+                        
+                        // Get the section files and index
+                        var
+                            section = event.data,
+                            files = $breadcrumb.data("files"),
+                            index = section.data("index");
+                        
+                        // Cut off the files array
                         files.splice(index + 1, files.length - index - 1);
-                        $breadcrumb.data("file", section.data("file"));
-                        semantic.breadcrumb.handler.render();                           
+                        
+                        // Update the uploader
+                        var file = files[index];
+                        
+
+                        // Active loader
+                        semantic.loader.handler.active();
+                        
+                        // Get all files of current folder
+                        $.ajax({
+                          url  : './rest/files.json?parentid=' + file.id,
+                          type : 'get',
+                          data : {},
+                          success: function (files) {
+
+                            // Update the dropzone
+                            myDropzone.renderPreviews(files);
+
+                            // Update the breadcrumb
+                            semantic.breadcrumb.handler.render();
+                              
+                              
+                            // Deactive loader
+                            semantic.loader.handler.deactivate();
+                          },
+                          error: function (errormessage) {
+                          }
+                        })
+                        ;
+                        
                     })
                     ;  
                     
@@ -92,9 +125,6 @@ semantic.breadcrumb.ready = function(){
         }
     }
     ;
-    
-    // Initlizate the breadcrumb file
-    $breadcrumb.data("file", { id: null, name: "主目录" });
 }
 ;
 

@@ -50,6 +50,7 @@
 <script src="javascript/breadcrumb.js"></script>
 <script src="javascript/checkbox.js"></script>
 <script src="javascript/toolbar.js"></script>
+<script src="javascript/loader.js"></script>
 <script src="javascript/init.js"></script>
     
 <!-- The style sheets -->
@@ -333,6 +334,11 @@
     -->
 
     <form action="./upload" id="uploader" class="main demo container dropzone" method="post" enctype="multipart/form-data">
+        <div class="ui active inverted dimmer">
+            <div class="ui large text loader">
+              载入中
+            </div>
+        </div>
         <div class="bigplus"></div>
         <div class="ui close right rail">
             <div class="ui" style="margin-top:20px" >

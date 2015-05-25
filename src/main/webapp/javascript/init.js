@@ -23,11 +23,12 @@ semantic.init.handler = {
           semantic.dropdown.handler.updateUsername(user.loginName);
           semantic.init.handler.user = user;
             
-          // Update the breadcrumb 
+          // Initlizate the breadcrumb 
           semantic.breadcrumb.handler.render([{id: 0, name: "主目录"}], "private");
             
-            // Remove all dz-preview
-            $(".dz-preview.dz-success.dz-image-preview").remove();
+            
+            // Active loader
+            semantic.loader.handler.active();
             
             // Get all files of current user
             $.ajax({
@@ -35,7 +36,12 @@ semantic.init.handler = {
               type : 'get',
               data : {},
               success: function (files) {
+                
+                // Render the previews  
                 myDropzone.renderPreviews(files);
+                  
+                // Deactive loader
+                semantic.loader.handler.deactivate();
               },
               error: function (errormessage) {
               }

@@ -26,9 +26,7 @@ public class FilesController extends RestBaseAction {
 	
 	private static final long serialVersionUID = 1L;
 	private String id;
-	private long parent;
-	private long owner;
-
+	private String parentId;
 
 	private File file = new File();
 	private List<File> files;
@@ -39,7 +37,7 @@ public class FilesController extends RestBaseAction {
 	
 	// Get /rest/files
 	public HttpHeaders index() {
-		files = fileService.getByParentAndOwner(parent,owner);
+		files = fileService.getByParent(Long.parseLong(parentId));
 		model = files;
 		return httpHeaders.withStatus(200);
 	}
@@ -93,20 +91,8 @@ public class FilesController extends RestBaseAction {
 		return model;
 	}
 
-	public long getParent() {
-		return parent;
-	}
-
-	public void setParent(long parent) {
-		this.parent = parent;
-	}
-
-	public long getOwner() {
-		return owner;
-	}
-
-	public void setOwner(long owner) {
-		this.owner = owner;
+	public void setParentid(String parentId) {
+		this.parentId = parentId;
 	}
 
 } 
