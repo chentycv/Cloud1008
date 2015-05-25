@@ -49,10 +49,14 @@ semantic.toolbar.ready = function(){
         // Get checked list from checkbox
         var checked = semantic.checkbox.handler.getChecked();
         
+        // The index array
+        var indexList = [];
+        
         // Batch delete the dzDetails
         for (var key in checked){
             var dzPreview = checked[key];
             var file = dzPreview.data("file");
+            var index = dzPreview.data("index");
             
             // Remove dzDetails in checklist
             semantic.checkbox.handler.remove(dzPreview);
@@ -60,8 +64,8 @@ semantic.toolbar.ready = function(){
             // Remove elements in page
             dzPreview.remove();
             
-            // Remove elements of $myDropzone
-            $myDropzone.data("files").splice(file.index, 1);
+            // Push the index to indexList
+            indexList.push(index);
             
             // Delete the file of server
             $.ajax({
@@ -73,6 +77,17 @@ semantic.toolbar.ready = function(){
                   error: function (errormessage) {
                   }
             });
+        }
+        
+        // Sort the indexList
+        indexList.sort(function(a, b){
+            return b - a;
+        });
+        
+        for (var i = 0; i < indexList.length; i++){
+            
+            // Remove elements of $myDropzone
+            $myDropzone.data("files").splice(indexList[i], 1);
         }
     })
     ;

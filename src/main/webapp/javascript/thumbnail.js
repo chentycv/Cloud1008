@@ -34,11 +34,16 @@ semantic.thumbnail.ready = function(){
             } else { 
                 var ext = semantic.thumbnail.handler.getFileExtension(file.name);
                 switch (ext){
-                    case "doc": return icons.doc; break;
-                    case "xls": return icons.xls; break;
-                    case "ppt": return icons.ppt; break;
+                    case "doc":
+                    case "docx": return icons.doc; break;
+                    case "xls":
+                    case "xlsx": return icons.xls; break;
+                    case "ppt":
+                    case "pptx": return icons.ppt; break;
                     case "mp4": 
-                    case "avi":
+                    case "avi": 
+                    case "flv":
+                    case "rmvb":
                     case "mpg": return icons.video; break;
                     case "zip": 
                     case "rar": 

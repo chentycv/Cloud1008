@@ -75,13 +75,18 @@ Dropzone.prototype.renderPreviews = function(files) {
 	$(".dz-preview").remove();
 
     // Render the files
-    for (var i in files){
+    for (var i = 0; i < files.length; i++){
         var file = files[i];
         file.index = i;
         this.files.push(file);
         file.status = Dropzone.ADDED;
         this.emit("addedfile", file);
         this.emit("success", file);
+        
+        // Update thumbnail
+        if (file.thumbnail && file.thumbnail !== ""){
+            this.emit("thumbnail", file, file["thumbnail"]);
+        }
     }
 };
 
@@ -92,12 +97,6 @@ var $myDropzone = $(myDropzone);
 
 // Listen to events
 myDropzone.on("success", function(file) {
-
-  if (file.thumbnail && file.thumbnail !== ""){
-    this.emit("thumbnail", file, file["thumbnail"]);
-  } else {
-     this.emit("thumbnail", file, semantic.thumbnail.handler.getThumbnail(file));
-  }
     
   // Get response object 
   var path = file.xhr ? file.xhr.response : undefined;
@@ -157,7 +156,6 @@ myDropzone.on("success", function(file) {
                                  parent: file.parent,
                                  path: file.path,
                                  size: file.size,
-                                 thumbnail: file.thumbnail,
                                  type: file.type}),
           contentType: "application/json; charset=utf-8",
           dataType: "json",
@@ -242,6 +240,7 @@ myDropzone.on("success", function(file) {
       file.type = "file";
       
       if (path){
+          
           // Sent the file to server
           $.ajax({
                   url  : './rest/files.json',
@@ -255,17 +254,23 @@ myDropzone.on("success", function(file) {
                                          type: "file"}),
                   contentType: "application/json; charset=utf-8",
                   dataType: "json",
-                  success: function (file) {
-                      $myDropzone.data("files").push(file);
-                      dzPreview.data("file", file);
+                  success: function (msg) {
+                      var files = $myDropzone.data("files")
+                      files.push(msg);
+                      dzPreview.data("file", msg);
+                      dzPreview.data("index", files.length - 1);
+                      file.id = msg.id;
                   },
                   error: function (errormessage) {
                   }
           });
       } else {
+          
+          // Save the file to dzPreview
           dzPreview.data("file", file);
+
       }
-  }
+  } else 
 
   // Create the folder entity
   if ( file.type === "folder") {
@@ -292,8 +297,9 @@ myDropzone.on("success", function(file) {
                                          type: "folder"}),
                   contentType: "application/json; charset=utf-8",
                   dataType: "json",
-                  success: function (file) {
-                      dzPreview.data("file", file);
+                  success: function (msg) {
+                      dzPreview.data("file", msg);
+                      file.id = msg.id;
                   },
                   error: function (errormessage) {
                   }
@@ -304,6 +310,12 @@ myDropzone.on("success", function(file) {
     }
   }
 
+    
+  // Update thumbnail
+  if (dzThumbnail.attr("src") === undefined){
+      this.emit("thumbnail", file, semantic.thumbnail.handler.getThumbnail(file));
+  }
+    
   // Update checkbox
   semantic.checkbox.handler.update(dzCheckbox);
 
