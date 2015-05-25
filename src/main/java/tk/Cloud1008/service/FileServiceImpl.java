@@ -70,13 +70,15 @@ public class FileServiceImpl implements FileService{
 	public void delete(File file) {
 		// TODO Auto-generated method stub
 		file = fileDAO.selectFile(file.getId());
-		List<File> fileobj  = fileDAO.getByParentAndOwner(file.getId(), file.getOwner());
 		this.fileDAO.deleteFileEntity(file);
-		for(Object obj : fileobj)
-		{
-			File o = (File) obj;
-			System.out.println(o.getId());
-			delete(o);
+		if( file.getId() != 0) {
+			List<File> fileobj  = fileDAO.getByParentAndOwner(file.getId(), file.getOwner());
+			for(Object obj : fileobj)
+			{
+				File o = (File) obj;
+				System.out.println(o.getId());
+				delete(o);
+			}
 		}
 		
 	}

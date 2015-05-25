@@ -77,6 +77,7 @@ Dropzone.prototype.renderPreviews = function(files) {
     // Render the files
     for (var i in files){
         var file = files[i];
+        file.index = i;
         this.files.push(file);
         file.status = Dropzone.ADDED;
         this.emit("addedfile", file);
@@ -104,14 +105,15 @@ myDropzone.on("success", function(file) {
     dzThumbnail = dzDetails.find("img"),
     dzName = dzDetails.find("span").first(),
     dzInput = dzDetails.find(".ui.icon.input").first(),
-    dzSize = dzDetails.find(".dz-size").first();
-  
-  // Remove the success mark not upload
+    dzSize = dzDetails.find(".dz-size").first(),
+    dzCheckbox = dzDetails.find(".ui.checkbox").first();
+   
+  // Remove the success mark if not uploaded
   if (path === undefined) {
     dzPreview.find(".dz-success-mark").remove();
   }  
     
-  // Bind the event of dzName and dzInput
+  // Bind the event of dzName dzInput and dzCheck
   dzName.on("click", function(event){
     
     // Get the text from dzName and copy to input
@@ -137,7 +139,7 @@ myDropzone.on("success", function(file) {
     dzInput.addClass("hidden");
       
     // Update the file
-    var file = dzDetails.data("file");
+    var file = dzPreview.data("file");
     file.name = filename;
     
     // Update the file of server
@@ -155,7 +157,7 @@ myDropzone.on("success", function(file) {
           contentType: "application/json; charset=utf-8",
           dataType: "json",
           success: function (file) {
-              dzDetails.data("file", file);
+              dzPreview.data("file", file);
           },
           error: function (errormessage) {
           }
@@ -170,9 +172,20 @@ myDropzone.on("success", function(file) {
     dzInput.addClass("hidden");
   })
   ; 
-     
+    
+  dzCheckbox.on("click", function(){
+    
+    if (dzCheckbox.checkbox('is unchecked')){
+        semantic.checkbox.handler.add(dzPreview);
+    } else {
+        semantic.checkbox.handler.remove(dzPreview);
+    }
+  })
+  ;
+    
+  // The download of file of the step into of folder     
   $.merge(dzPlaceholder, dzThumbnail).on("click", function(event){
-    var file = dzDetails.data("file");
+    var file = dzPreview.data("file");
     if ( file.type === "folder" ){
         
         
@@ -212,8 +225,9 @@ myDropzone.on("success", function(file) {
   })
   ;
     
-    
-    
+  // Get the index of file
+  dzPreview.data("index", file.index);
+      
   // Create the post the file if path exist
   if (path || file.type === "file"){
       
@@ -235,13 +249,14 @@ myDropzone.on("success", function(file) {
                   contentType: "application/json; charset=utf-8",
                   dataType: "json",
                   success: function (file) {
-                      dzDetails.data("file", file);
+                      $myDropzone.data("files").push(file);
+                      dzPreview.data("file", file);
                   },
                   error: function (errormessage) {
                   }
           });
       } else {
-          dzDetails.data("file", file);
+          dzPreview.data("file", file);
       }
   }
 
@@ -254,6 +269,9 @@ myDropzone.on("success", function(file) {
       // The file is created by toolbar
       if( file.created ){
       
+          // Update the created property
+          delete file.created;
+          
           // Click the folder name
           dzName.click();
 
@@ -268,20 +286,19 @@ myDropzone.on("success", function(file) {
                   contentType: "application/json; charset=utf-8",
                   dataType: "json",
                   success: function (file) {
-                      dzDetails.data("file", file);
+                      dzPreview.data("file", file);
                   },
                   error: function (errormessage) {
                   }
         });  
   
     } else {
-        dzDetails.data("file", file);
+        dzPreview.data("file", file);
     }
   }
 
   // Update checkbox
-  var checkbox = dzDetails.find(".ui.checkbox").first();
-  semantic.checkbox.handler.update(checkbox);
+  semantic.checkbox.handler.update(dzCheckbox);
 
 });
 

@@ -33,7 +33,7 @@ public class FileDAOImpl implements FileDAO {
 		// TODO Auto-generated method stub
 				
 		Query query = this.sessionFactory.getCurrentSession()
-				.createQuery("delete from FileEntity f where f.id = :id");
+				.createQuery("delete from File f where f.id = :id");
 		query.setParameter("id", id);
 		query.executeUpdate();
 	}
@@ -88,7 +88,7 @@ public class FileDAOImpl implements FileDAO {
 	public File selectFile(long id) {
 		// TODO Auto-generated method stub
 		Query query = this.sessionFactory.getCurrentSession()
-				.createQuery("from FileEntity f where f.id = :id");
+				.createQuery("from File f where f.id = :id");
 		query.setParameter("id", id);
 		return (File) query.list().get(0);
 	}
