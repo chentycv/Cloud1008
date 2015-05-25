@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringBufferInputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -60,6 +62,6 @@ public class DownloadController extends PageBaseAction {
 	}
 	
 	public String getContentDisposition() throws UnsupportedEncodingException {
-		return "attachment;filename=\""+ java.net.URLEncoder.encode(name,"UTF-8") +"\"";
+		return "attachment;filename=\""+  StringUtils.replace(URLEncoder.encode(name,"UTF-8") ,"+", "%20") +"\"";
 	}
 }
