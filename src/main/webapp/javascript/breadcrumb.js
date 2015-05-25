@@ -87,6 +87,9 @@ semantic.breadcrumb.ready = function(){
                         // Active loader
                         semantic.loader.handler.active();
                         
+                        // Clean the dz-preview    
+	                    $(".dz-preview").remove();
+                        
                         // Get all files of current folder
                         $.ajax({
                           url  : file.id === 0 ?
