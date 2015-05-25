@@ -89,7 +89,9 @@ semantic.breadcrumb.ready = function(){
                         
                         // Get all files of current folder
                         $.ajax({
-                          url  : './rest/files.json?parentid=' + file.id,
+                          url  : file.id === 0 ?
+                                      './rest/users/' + semantic.init.handler.user.id + '/files.json'  
+                                    : './rest/files.json?parentid=' + file.id,
                           type : 'get',
                           data : {},
                           success: function (files) {
