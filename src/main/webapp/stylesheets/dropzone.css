@@ -184,7 +184,7 @@
 
 @media (min-width: 1000px){
   .dropzone {
-    min-height: 200px;
+    min-height: 500px;
     padding: 23px;
     background-color: #f4f6f4;
   }

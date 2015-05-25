@@ -82,7 +82,11 @@ Dropzone.prototype.renderPreviews = function(files) {
         file.status = Dropzone.ADDED;
         this.emit("addedfile", file);
         this.emit("success", file);
-        this.emit("thumbnail", file, file["thumbnail"]);
+        if (file.thumbnail && file.thumbnail !== ""){
+            this.emit("thumbnail", file, file["thumbnail"]);
+        } else {
+            this.emit("thumbnail", file, semantic.thumbnail.handler.getThumbnail(file));
+        }
     }
 };
 
@@ -138,7 +142,7 @@ myDropzone.on("success", function(file) {
     dzName.removeClass("hidden");
     dzInput.addClass("hidden");
       
-    // Update the file
+    // Update the dzPreview file
     var file = dzPreview.data("file");
     file.name = filename;
     
@@ -157,7 +161,9 @@ myDropzone.on("success", function(file) {
           contentType: "application/json; charset=utf-8",
           dataType: "json",
           success: function (file) {
-              dzPreview.data("file", file);
+              dzPreview.data("file", file); 
+              var index = dzPreview.data("index");
+              $myDropzone.data("files")[index].name = filename;
           },
           error: function (errormessage) {
           }
