@@ -82,5 +82,10 @@ public class FileServiceImpl implements FileService{
 		}
 		
 	}
+
+	@Override
+	public File getThumbnail(long id) {
+		return fileDAO.getThumbnail(id);
+	}
 	
 }

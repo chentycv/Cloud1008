@@ -82,11 +82,6 @@ Dropzone.prototype.renderPreviews = function(files) {
         file.status = Dropzone.ADDED;
         this.emit("addedfile", file);
         this.emit("success", file);
-        
-        // Update thumbnail
-        if (file.thumbnail && file.thumbnail !== ""){
-            this.emit("thumbnail", file, file["thumbnail"]);
-        }
     }
 };
 
@@ -317,8 +312,24 @@ myDropzone.on("success", function(file) {
     
   // Update thumbnail
   if (dzThumbnail.attr("src") === undefined){
+      
+      // Update thumbnail by icon
       this.emit("thumbnail", file, semantic.thumbnail.handler.getThumbnail(file));
+      
+      // Update thumbnail by thumbnail
+      $.ajax({
+        url  : './rest/files/' + file.id + '/thumbnail.json',
+        type : 'get',
+        data : {},
+        success: function (msg) {        
+            if (msg.thumbnail && msg.thumbnail !== ""){
+                myDropzone.emit("thumbnail", file, msg["thumbnail"]);
+            }
+        }
+      });
   }
+    
+
     
   // Update checkbox
   semantic.checkbox.handler.update(dzCheckbox);

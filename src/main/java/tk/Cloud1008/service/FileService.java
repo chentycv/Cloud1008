@@ -18,4 +18,6 @@ public interface FileService {
 	public List<File> getByOwner(long owner);
 
 	public List<File> getByParentAndOwner(long parent, long owner);
+	
+	public File getThumbnail(long id);
 }

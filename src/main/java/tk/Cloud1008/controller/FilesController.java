@@ -67,6 +67,13 @@ public class FilesController extends RestBaseAction {
 		return httpHeaders.withStatus(200);
 	}
 	
+
+	// GET /rest/files/{id}/thumbnail
+	public HttpHeaders thumbnail() {
+		file = fileService.getThumbnail(Long.parseLong(id));
+		model = file;
+		return httpHeaders.withStatus(200);
+	}
 	
 /*	// GET /rest/users/{id}
 	public HttpHeaders show() {

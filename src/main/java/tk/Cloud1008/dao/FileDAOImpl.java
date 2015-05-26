@@ -2,8 +2,12 @@ package tk.Cloud1008.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +20,8 @@ public class FileDAOImpl implements FileDAO {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	private File file;
 	
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -48,35 +54,64 @@ public class FileDAOImpl implements FileDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<File> getByParent(long parent) {
-		// TODO Auto-generated method stub
-		Query query = this.sessionFactory.getCurrentSession()
-				.createQuery("from File f where f.parent = :parent");
-		query.setParameter("parent", parent);
-		
-		return (List<File>) query.list();
+		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(File.class)
+		.setProjection( Projections.distinct( Projections.projectionList()
+			.add( Projections.property("id"), "id")
+			.add( Projections.property("name"), "name")
+			.add( Projections.property("owner"), "owner")
+			.add( Projections.property("parent"), "parent")
+			.add( Projections.property("path"), "path")
+			.add( Projections.property("size"), "size")
+			.add( Projections.property("type"), "type") ))
+		.add( Restrictions.eq("parent", parent) )
+		.setResultTransformer(Transformers.aliasToBean(File.class));
+		return (List<File>) criteria.list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<File> getByOwner(long owner) {
-		// TODO Auto-generated method stub
-		Query query = this.sessionFactory.getCurrentSession()
-				.createQuery("from File f where f.owner = :owner");
-		query.setParameter("owner", owner);
-		
-		return (List<File>) query.list();
+		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(File.class)
+		.setProjection( Projections.distinct( Projections.projectionList()
+			.add( Projections.property("id"), "id")
+			.add( Projections.property("name"), "name")
+			.add( Projections.property("owner"), "owner")
+			.add( Projections.property("parent"), "parent")
+			.add( Projections.property("path"), "path")
+			.add( Projections.property("size"), "size")
+			.add( Projections.property("type"), "type") ))
+		.add( Restrictions.eq("owner", owner) )
+		.setResultTransformer(Transformers.aliasToBean(File.class));
+		return (List<File>) criteria.list();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<File> getByParentAndOwner(long parent, long owner) {
-		// TODO Auto-generated method stub
-		Query query = this.sessionFactory.getCurrentSession()
-				.createQuery("from File f where f.parent = :id and f.owner = :owner");
-		query.setParameter("id", parent);
-		query.setParameter("owner", owner);
-		
-		return (List<File>) query.list();
+	public List<File> getByParentAndOwner(long parent, long owner) {		
+		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(File.class)
+		.setProjection( Projections.distinct( Projections.projectionList()
+			.add( Projections.property("id"), "id")
+			.add( Projections.property("name"), "name")
+			.add( Projections.property("owner"), "owner")
+			.add( Projections.property("parent"), "parent")
+			.add( Projections.property("path"), "path")
+			.add( Projections.property("size"), "size")
+			.add( Projections.property("type"), "type") ))
+		.add( Restrictions.eq("parent", parent) )
+		.add( Restrictions.eq("owner", owner) )
+		.setResultTransformer(Transformers.aliasToBean(File.class));
+		return (List<File>) criteria.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public File getThumbnail(long id) {		
+		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(File.class)
+		.setProjection( Projections.distinct( Projections.projectionList()
+			.add( Projections.property("thumbnail"), "thumbnail") ))
+		.add( Restrictions.eq("id", id) )
+		.setResultTransformer(Transformers.aliasToBean(File.class));
+		return ((List<File>) criteria.list()).get(0);
 	}
 	@Override
 	public void updateFile(File file) {

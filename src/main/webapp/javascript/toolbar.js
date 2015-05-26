@@ -84,11 +84,13 @@ semantic.toolbar.ready = function(){
             return b - a;
         });
         
+        // Remove elements of $myDropzone and render
+        var files = $myDropzone.data("files");
         for (var i = 0; i < indexList.length; i++){
-            
-            // Remove elements of $myDropzone
-            $myDropzone.data("files").splice(indexList[i], 1);
+            files.splice(indexList[i], 1);
         }
+        myDropzone.renderPreviews(files);
+        
     })
     ;
 }
