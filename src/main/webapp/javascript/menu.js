@@ -171,6 +171,10 @@ semantic.menu.ready = function() {
                 }
               }
               
+              
+              // Render the empty friends list
+              semantic.menu.handler.renderMenuFriends(users);
+              
               // Request the user entities
               for(var userId in usersDegrees){
                   $.ajax({
